@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "Створення завдання";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h4 class="fw-bold mb-0">Створення нового завдання</h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- Basic Information -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Основна інформація</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Назва завдання *</label>
+                                    <input type="text" class="form-control" placeholder="Наприклад: Two Sum">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Складність *</label>
+                                    <select class="form-select">
+                                        <option value="">Оберіть складність</option>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Опис завдання *</label>
+                                    <textarea class="form-control" rows="4" placeholder="Детальний опис завдання..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Programming Languages -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Мови програмування</h6>
+                            <div class="row g-2">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="python">
+                                        <label class="form-check-label" for="python">
+                                            <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="javascript">
+                                        <label class="form-check-label" for="javascript">
+                                            <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="csharp">
+                                        <label class="form-check-label" for="csharp">
+                                            <i class="bi bi-filetype-cs text-primary me-1"></i>C#
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="java">
+                                        <label class="form-check-label" for="java">
+                                            <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Starter Code -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Початковий код</h6>
+                            <div class="code-editor">
+                                <div class="code-header d-flex justify-content-between align-items-center">
+                                    <span class="text-light">solution.py</span>
+                                    <select class="form-select form-select-sm" style="width: auto;">
+                                        <option>Python</option>
+                                        <option>JavaScript</option>
+                                        <option>C#</option>
+                                        <option>Java</option>
+                                    </select>
+                                </div>
+                                <textarea class="form-control border-0 bg-dark text-light" rows="8" style="font-family: 'Courier New', monospace;">
+def solution(nums, target):
+    # Write your solution here
+    pass
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Test Cases -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Тест-кейси</h6>
+                            <div class="card bg-dark border-0">
+                                <div class="card-body">
+                                    <div class="test-case mb-3 p-3 bg-dark rounded">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="fw-bold mb-0">Тест-кейс 1</h6>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Вхідні дані</label>
+                                                <input type="text" class="form-control form-control-sm" value="[2,7,11,15], 9">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Очікуваний результат</label>
+                                                <input type="text" class="form-control form-control-sm" value="[0,1]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-plus-circle me-1"></i>Додати тест-кейс
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">Налаштування</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Максимальний час виконання (сек)</label>
+                                    <input type="number" class="form-control" value="5">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Максимальна пам'ять (MB)</label>
+                                    <input type="number" class="form-control" value="128">
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="visible">
+                                        <label class="form-check-label" for="visible">
+                                            Публічне завдання
+                                        </label>
+                                    </div>
+                                    <small class="text-muted">Якщо увімкнено, завдання буде видиме для студентів</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-primary btn-modern">
+                                <i class="bi bi-check-circle me-2"></i>Створити завдання
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark me-2"></i>Зберегти чернетку
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-danger ms-auto">
+                                <i class="bi bi-x-circle me-2"></i>Скасувати
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

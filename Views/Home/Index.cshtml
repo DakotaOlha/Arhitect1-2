@@ -1,0 +1,167 @@
+﻿@{
+    ViewData["Title"] = "CodeLearn - Навчайся програмування";
+}
+
+<!-- Hero Section -->
+<section class="gradient-primary text-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Навчайся програмування через практику</h1>
+                <p class="lead mb-4">Вирішуй реальні завдання, отримуй миттєву зворотній зв'язок та покращуй свої навички програмування разом з нашою платформою.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                    <a asp-area="Student" asp-controller="Challenges" asp-action="Index" class="btn btn-light btn-lg btn-modern">
+                        <i class="bi bi-play-circle me-2"></i>Продовжити навчання
+                    </a>
+                    }
+                    else
+                    {
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg btn-modern">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Почати безкоштовно
+                    </a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg btn-modern">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Увійти
+                    </a>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="code-editor mt-4 mt-lg-0 mx-auto" style="max-width: 500px;">
+                    <div class="code-header d-flex justify-content-between align-items-center">
+                        <span class="text-light">main.py</span>
+                        <div>
+                            <span class="badge bg-success me-1">Python</span>
+                            <span class="badge bg-warning">Easy</span>
+                        </div>
+                    </div>
+                    <pre class="p-3 mb-0"><code class="language-python text-start">
+def sum_two_numbers(a, b):
+    # Write your code here
+    return a + b
+
+# Test your solution
+print(sum_two_numbers(5, 3))  # Should print 8
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-dark">
+    <div class="container py-5">
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h2 class="display-5 fw-bold mb-3">Чому обирають нас?</h2>
+                <p class="lead text-muted">Сучасний підхід до навчання програмування</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-modern h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="gradient-primary rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-lightning-charge text-white fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Миттєва перевірка</h4>
+                        <p class="text-muted">Отримуй миттєву зворотній зв'язок по своїм рішенням через автоматичну перевірку тест-кейсів</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-modern h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="gradient-success rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-graph-up text-white fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Прогрес та аналітика</h4>
+                        <p class="text-muted">Відстежуй свій прогрес, аналізуй статистику та покращуй слабкі місця</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-modern h-100 text-center p-4">
+                    <div class="card-body">
+                        <div class="gradient-warning rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-trophy text-white fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold">Система досягнень</h4>
+                        <p class="text-muted">Змагайся з іншими студентами, отримуй досягнення та піднімайся в рейтингу</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-secondary bg-opacity-10">
+    <div class="container py-4">
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-6">
+                <div class="stats-card gradient-primary">
+                    <h3 class="stats-number">500+</h3>
+                    <p class="stats-label">Завдань</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stats-card gradient-success">
+                    <h3 class="stats-number">10k+</h3>
+                    <p class="stats-label">Студентів</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stats-card gradient-warning">
+                    <h3 class="stats-number">15+</h3>
+                    <p class="stats-label">Мов програмування</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stats-card gradient-dark">
+                    <h3 class="stats-number">50k+</h3>
+                    <p class="stats-label">Рішень</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Languages Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h2 class="display-5 fw-bold mb-3">Підтримувані мови</h2>
+                <p class="lead text-muted">Обирай свою улюблену мову програмування</p>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @{
+                var languages = new[]
+                {
+                    new { Name = "Python", Icon = "bi-filetype-py", Color = "success" },
+                    new { Name = "JavaScript", Icon = "bi-filetype-js", Color = "warning" },
+                    new { Name = "C#", Icon = "bi-filetype-cs", Color = "primary" },
+                    new { Name = "Java", Icon = "bi-filetype-java", Color = "danger" },
+                    new { Name = "C++", Icon = "bi-filetype-cpp", Color = "info" },
+                    new { Name = "TypeScript", Icon = "bi-filetype-ts", Color = "primary" }
+                };
+            }
+
+            @foreach (var lang in languages)
+            {
+            <div class="col-lg-2 col-md-3 col-4">
+                <div class="card card-modern text-center p-3">
+                    <div class="card-body">
+                        <i class="@lang.Icon text-@lang.Color fs-1 mb-3"></i>
+                        <h6 class="fw-bold">@lang.Name</h6>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,530 @@
+﻿@{
+    ViewData["Title"] = "Завдання з програмування";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">Фільтри</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Search -->
+                    <div class="mb-4">
+                        <label class="form-label">Пошук</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-end-0">
+                                <i class="bi bi-search text-muted"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" placeholder="Назва завдання...">
+                        </div>
+                    </div>
+
+                    <!-- Difficulty -->
+                    <div class="mb-4">
+                        <label class="form-label">Складність</label>
+                        <div class="list-group list-group-flush">
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox" checked>
+                                <span class="badge bg-success me-1">Easy</span>
+                                <span class="text-muted">(45)</span>
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox" checked>
+                                <span class="badge bg-warning me-1">Medium</span>
+                                <span class="text-muted">(32)</span>
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <span class="badge bg-danger me-1">Hard</span>
+                                <span class="text-muted">(18)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Programming Languages -->
+                    <div class="mb-4">
+                        <label class="form-label">Мови програмування</label>
+                        <div class="list-group list-group-flush">
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox" checked>
+                                <i class="bi bi-filetype-py text-success me-1"></i>Python
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox" checked>
+                                <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <i class="bi bi-filetype-cs text-primary me-1"></i>C#
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="mb-4">
+                        <label class="form-label">Статус</label>
+                        <div class="list-group list-group-flush">
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox" checked>
+                                <i class="bi bi-circle text-muted me-1"></i>Не розв'язані
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <i class="bi bi-check-circle text-success me-1"></i>Розв'язані
+                            </label>
+                            <label class="list-group-item border-0 px-0 py-1">
+                                <input class="form-check-input me-2" type="checkbox">
+                                <i class="bi bi-clock text-warning me-1"></i>В процесі
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mb-4">
+                        <label class="form-label">Теги</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-secondary cursor-pointer">Arrays</span>
+                            <span class="badge bg-secondary cursor-pointer">Strings</span>
+                            <span class="badge bg-secondary cursor-pointer">Algorithms</span>
+                            <span class="badge bg-secondary cursor-pointer">Data Structures</span>
+                            <span class="badge bg-secondary cursor-pointer">Math</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100 btn-modern">
+                        <i class="bi bi-funnel me-2"></i>Застосувати фільтри
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Card -->
+            <div class="card card-modern mt-4">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Ваш прогрес</h6>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small>Завершено завдань</small>
+                            <small>12/95</small>
+                        </div>
+                        <div class="progress progress-modern">
+                            <div class="progress-bar bg-success" style="width: 12%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small>Easy</small>
+                            <small>8/45</small>
+                        </div>
+                        <div class="progress progress-modern">
+                            <div class="progress-bar bg-success" style="width: 18%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small>Medium</small>
+                            <small>4/32</small>
+                        </div>
+                        <div class="progress progress-modern">
+                            <div class="progress-bar bg-warning" style="width: 12%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <small>Hard</small>
+                            <small>0/18</small>
+                        </div>
+                        <div class="progress progress-modern">
+                            <div class="progress-bar bg-danger" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9 col-md-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Завдання з програмування</h2>
+                    <p class="text-muted mb-0">Практикуйте свої навички на різноманітних завданнях</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-sort-down me-2"></i>Сортування
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">За складністю</a></li>
+                            <li><a class="dropdown-item" href="#">За популярністю</a></li>
+                            <li><a class="dropdown-item" href="#">За датою додавання</a></li>
+                            <li><a class="dropdown-item" href="#">За алфавітом</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges Grid -->
+            <div class="row g-4">
+                <!-- Challenge Card 1 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-easy">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success">Easy</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Two Sum</h5>
+                            <p class="text-muted small mb-3">Знайдіть два числа в масиві, які в сумі дають задане значення...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Arrays</span>
+                                    <span class="badge bg-dark">Hash Table</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-cs text-primary me-1"></i>C#
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-success me-1"></i>
+                                    <small class="text-muted">85% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm btn-modern">
+                                    <i class="bi bi-play-circle me-1"></i>Розв'язати
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 2 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-medium">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning">Medium</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Binary Search</h5>
+                            <p class="text-muted small mb-3">Реалізуйте алгоритм бінарного пошуку для відсортованого масиву...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Arrays</span>
+                                    <span class="badge bg-dark">Binary Search</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-warning me-1"></i>
+                                    <small class="text-muted">65% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm btn-modern">
+                                    <i class="bi bi-play-circle me-1"></i>Розв'язати
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 3 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-easy">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success">Easy</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Reverse String</h5>
+                            <p class="text-muted small mb-3">Напишіть функцію, яка перевертає рядок. Вхідний рядок задається як масив символів...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Strings</span>
+                                    <span class="badge bg-dark">Two Pointers</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-cs text-primary me-1"></i>C#
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-success me-1"></i>
+                                    <small class="text-muted">92% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-success btn-sm btn-modern">
+                                    <i class="bi bi-check-circle me-1"></i>Розв'язано
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 4 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-hard">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-danger">Hard</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Merge K Sorted Lists</h5>
+                            <p class="text-muted small mb-3">Об'єднайте k відсортованих зв'язаних списків в один відсортований список...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Linked Lists</span>
+                                    <span class="badge bg-dark">Heap</span>
+                                    <span class="badge bg-dark">Divide & Conquer</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-danger me-1"></i>
+                                    <small class="text-muted">45% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm btn-modern">
+                                    <i class="bi bi-play-circle me-1"></i>Розв'язати
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 5 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-medium">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning">Medium</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Valid Parentheses</h5>
+                            <p class="text-muted small mb-3">Визначте, чи є рядок дужок валідним. Дужки мають правильно закриватися...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Strings</span>
+                                    <span class="badge bg-dark">Stack</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-cs text-primary me-1"></i>C#
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-warning me-1"></i>
+                                    <small class="text-muted">78% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-warning btn-sm btn-modern">
+                                    <i class="bi bi-clock me-1"></i>В процесі
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 6 -->
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-modern challenge-card challenge-difficulty-easy">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success">Easy</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary border-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark me-2"></i>Зберегти</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-share me-2"></i>Поділитися</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Palindrome Number</h5>
+                            <p class="text-muted small mb-3">Визначте, чи є число паліндромом. Число читається однаково зліва направо і справа наліво...</p>
+
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                    <span class="badge bg-dark">Math</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-success me-1"></i>
+                                    <small class="text-muted">88% успішність</small>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm btn-modern">
+                                    <i class="bi bi-play-circle me-1"></i>Розв'язати
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Попередня</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Наступна</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .challenge-card {
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .challenge-difficulty-easy {
+        border-left: 4px solid #28a745;
+    }
+
+    .challenge-difficulty-medium {
+        border-left: 4px solid #ffc107;
+    }
+
+    .challenge-difficulty-hard {
+        border-left: 4px solid #dc3545;
+    }
+
+    .input-group-text {
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        border-right: none;
+    }
+
+    .form-control.border-start-0 {
+        border-left: none;
+    }
+</style>

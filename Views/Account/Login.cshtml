@@ -1,0 +1,93 @@
+﻿@using Laba1_2.ViewModels
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Вхід в систему";
+}
+
+<div class="container">
+    <div class="row justify-content-center py-5">
+        <div class="col-md-6 col-lg-5">
+            <div class="card card-modern">
+                <div class="card-body p-5">
+                    <!-- Header -->
+                    <div class="text-center mb-5">
+                        <div class="gradient-primary rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-code-slash text-white fs-2"></i>
+                        </div>
+                        <h2 class="fw-bold">Вітаємо знову! 👋</h2>
+                        <p class="text-muted">Увійдіть у свій акаунт, щоб продовжити навчання</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-end-0">
+                                    <i class="bi bi-envelope text-muted"></i>
+                                </span>
+                                <input asp-for="Email" class="form-control border-start-0" placeholder="your@email.com">
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label asp-for="Password" class="form-label"></label>
+                                <a href="#" class="text-primary small text-decoration-none">Забули пароль?</a>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-end-0">
+                                    <i class="bi bi-lock text-muted"></i>
+                                </span>
+                                <input asp-for="Password" class="form-control border-start-0" placeholder="Введіть ваш пароль">
+                                <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input asp-for="RememberMe" class="form-check-input">
+                                <label asp-for="RememberMe" class="form-check-label"></label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 btn-modern mb-4">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Увійти
+                        </button>
+
+                        <!-- Register Link -->
+                        <div class="text-center">
+                            <p class="text-muted">
+                                Не маєте акаунту?
+                                <a asp-controller="Account" asp-action="Register" class="text-primary text-decoration-none fw-bold">Зареєструватися</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.querySelector('input[name="Password"]');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+    </script>
+}

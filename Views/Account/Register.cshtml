@@ -1,0 +1,202 @@
+﻿@using Laba1_2.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Реєстрація";
+}
+
+<div class="container">
+    <div class="row justify-content-center py-5">
+        <div class="col-md-8 col-lg-6">
+            <div class="card card-modern">
+                <div class="card-body p-5">
+                    <!-- Header -->
+                    <div class="text-center mb-5">
+                        <div class="gradient-success rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-person-plus text-white fs-2"></i>
+                        </div>
+                        <h2 class="fw-bold">Створіть акаунт 🚀</h2>
+                        <p class="text-muted">Приєднуйтесь до нашої спільноти розробників</p>
+                    </div>
+
+                    <!-- Registration Form -->
+                    <form>
+                        <div class="row g-3">
+                            <!-- First Name -->
+                            <div class="col-md-6">
+                                <label class="form-label">Ім'я *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-end-0">
+                                        <i class="bi bi-person text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Ваше ім'я" required>
+                                </div>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="col-md-6">
+                                <label class="form-label">Прізвище *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-end-0">
+                                        <i class="bi bi-person text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Ваше прізвище" required>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12">
+                                <label class="form-label">Електронна пошта *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-end-0">
+                                        <i class="bi bi-envelope text-muted"></i>
+                                    </span>
+                                    <input type="email" class="form-control border-start-0" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="col-12">
+                                <label class="form-label">Пароль *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-end-0">
+                                        <i class="bi bi-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" class="form-control border-start-0" placeholder="Створіть надійний пароль" required>
+                                    <button class="btn btn-outline-secondary border-start-0" type="button">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">
+                                    Пароль має містити принаймні 8 символів, включаючи цифри та літери
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="col-12">
+                                <label class="form-label">Підтвердження пароля *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-end-0">
+                                        <i class="bi bi-lock-fill text-muted"></i>
+                                    </span>
+                                    <input type="password" class="form-control border-start-0" placeholder="Повторіть ваш пароль" required>
+                                    <button class="btn btn-outline-secondary border-start-0" type="button">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- User Type -->
+                            <div class="col-12">
+                                <label class="form-label">Тип акаунту *</label>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-check-card">
+                                            <input class="form-check-input" type="radio" name="userType" id="student" checked>
+                                            <label class="form-check-label w-100" for="student">
+                                                <div class="card card-modern text-center p-3">
+                                                    <div class="card-body">
+                                                        <i class="bi bi-person fs-2 text-primary mb-2"></i>
+                                                        <h6 class="fw-bold">Студент</h6>
+                                                        <small class="text-muted">Навчайтесь та практикуйте навички</small>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check-card">
+                                            <input class="form-check-input" type="radio" name="userType" id="mentor">
+                                            <label class="form-check-label w-100" for="mentor">
+                                                <div class="card card-modern text-center p-3">
+                                                    <div class="card-body">
+                                                        <i class="bi bi-person-gear fs-2 text-warning mb-2"></i>
+                                                        <h6 class="fw-bold">Ментор</h6>
+                                                        <small class="text-muted">Створюйте завдання та допомагайте іншим</small>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bio -->
+                            <div class="col-12">
+                                <label class="form-label">Про себе (необов'язково)</label>
+                                <textarea class="form-control" rows="3" placeholder="Розкажіть трохи про себе, ваш досвід та інтереси..."></textarea>
+                            </div>
+
+                            <!-- Terms -->
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        Я погоджуюсь з <a href="#" class="text-primary">Умовами використання</a> та <a href="#" class="text-primary">Політикою конфіденційності</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Newsletter -->
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                                    <label class="form-check-label" for="newsletter">
+                                        Я хочу отримувати інформацію про нові завдання та оновлення платформи
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success w-100 btn-modern mt-4">
+                            <i class="bi bi-person-plus me-2"></i>Створити акаунт
+                        </button>
+
+                        <!-- Login Link -->
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                Вже маєте акаунт?
+                                <a asp-controller="Account" asp-action="Login" class="text-primary text-decoration-none fw-bold">Увійти</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-check-card .form-check-input {
+        display: none;
+    }
+
+        .form-check-card .form-check-input:checked + .form-check-label .card {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+    .form-check-card .card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .form-check-card .card:hover {
+            border-color: #667eea;
+        }
+
+    .input-group-text {
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        border-right: none;
+    }
+
+    .form-control.border-start-0 {
+        border-left: none;
+    }
+
+    .btn-outline-secondary.border-start-0 {
+        border-left: none;
+    }
+</style>

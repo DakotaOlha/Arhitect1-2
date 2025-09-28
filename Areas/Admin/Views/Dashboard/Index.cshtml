@@ -1,0 +1,261 @@
+﻿@{
+    ViewData["Title"] = "Панель адміністратора";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card card-modern">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="gradient-danger rounded-circle p-2 d-inline-flex mb-3">
+                            <i class="bi bi-shield-check text-white fs-1"></i>
+                        </div>
+                        <h5 class="fw-bold">@User.Identity?.Name</h5>
+                        <span class="badge bg-danger">Admin</span>
+                    </div>
+
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" asp-controller="Dashboard" asp-action="Index">
+                            <i class="bi bi-speedometer2 me-2"></i>Огляд
+                        </a>
+                        <a class="nav-link" asp-controller="Users" asp-action="Index">
+                            <i class="bi bi-people me-2"></i>Користувачі
+                        </a>
+                        <a class="nav-link" asp-controller="Challenges" asp-action="Index">
+                            <i class="bi bi-journal-code me-2"></i>Завдання
+                        </a>
+                        <a class="nav-link" asp-controller="Languages" asp-action="Index">
+                            <i class="bi bi-code-slash me-2"></i>Мови програмування
+                        </a>
+                        <a class="nav-link" asp-controller="System" asp-action="Index">
+                            <i class="bi bi-gear me-2"></i>Системні налаштування
+                        </a>
+                        <a class="nav-link" asp-controller="Logs" asp-action="Index">
+                            <i class="bi bi-list-check me-2"></i>Логи
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="card card-modern mt-4">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Статус системи</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small>База даних</small>
+                        <span class="badge bg-success">Online</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small>Сервіс виконання</small>
+                        <span class="badge bg-success">Online</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small>API</small>
+                        <span class="badge bg-success">Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9 col-md-8">
+            <!-- Welcome Card -->
+            <div class="card card-modern gradient-danger text-white mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="fw-bold">Панель адміністратора 🛡️</h3>
+                            <p class="mb-0">Керуйте платформою, користувачами та завданнями. Моніторьте стан системи.</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-shield-check fs-1 opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-modern">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="gradient-primary rounded p-3 me-3">
+                                    <i class="bi bi-people text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-0">1,247</h4>
+                                    <small class="text-muted">Користувачів</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-modern">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="gradient-success rounded p-3 me-3">
+                                    <i class="bi bi-journal-code text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-0">156</h4>
+                                    <small class="text-muted">Завдань</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-modern">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="gradient-warning rounded p-3 me-3">
+                                    <i class="bi bi-check-circle text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-0">5,678</h4>
+                                    <small class="text-muted">Вирішень</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-modern">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="gradient-info rounded p-3 me-3">
+                                    <i class="bi bi-code-slash text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-0">8</h4>
+                                    <small class="text-muted">Мов програмування</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Users & System Overview -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card card-modern">
+                        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold mb-0">Останні користувачі</h5>
+                            <a asp-controller="Users" asp-action="Index" class="btn btn-sm btn-outline-primary">Всі користувачі</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="gradient-primary rounded-circle p-2 me-3">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="fw-bold mb-0">John Doe</h6>
+                                            <small class="text-muted">john@example.com</small>
+                                        </div>
+                                        <span class="badge bg-success">Student</span>
+                                    </div>
+                                </div>
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="gradient-warning rounded-circle p-2 me-3">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="fw-bold mb-0">Jane Smith</h6>
+                                            <small class="text-muted">jane@example.com</small>
+                                        </div>
+                                        <span class="badge bg-warning">Mentor</span>
+                                    </div>
+                                </div>
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="gradient-success rounded-circle p-2 me-3">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="fw-bold mb-0">Mike Johnson</h6>
+                                            <small class="text-muted">mike@example.com</small>
+                                        </div>
+                                        <span class="badge bg-success">Student</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card card-modern">
+                        <div class="card-header bg-transparent border-bottom">
+                            <h5 class="fw-bold mb-0">Системна інформація</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <small class="text-muted">Версія платформи</small>
+                                <p class="fw-bold mb-0">v2.1.0</p>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">Останнє оновлення</small>
+                                <p class="fw-bold mb-0">15.01.2024 14:30</p>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">Навантаження сервера</small>
+                                <div class="progress progress-modern mt-1">
+                                    <div class="progress-bar bg-success" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-muted">Вільне місце</small>
+                                <div class="progress progress-modern mt-1">
+                                    <div class="progress-bar bg-info" style="width: 78%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="row g-4 mt-2">
+                <div class="col-12">
+                    <div class="card card-modern">
+                        <div class="card-header bg-transparent border-bottom">
+                            <h5 class="fw-bold mb-0">Швидкі дії</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-3 col-6">
+                                    <a asp-controller="Users" asp-action="Create" class="btn btn-outline-primary w-100 btn-modern">
+                                        <i class="bi bi-person-plus me-2"></i>Додати користувача
+                                    </a>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <a asp-controller="Challenges" asp-action="Create" class="btn btn-outline-success w-100 btn-modern">
+                                        <i class="bi bi-plus-circle me-2"></i>Створити завдання
+                                    </a>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <a asp-controller="Languages" asp-action="Create" class="btn btn-outline-warning w-100 btn-modern">
+                                        <i class="bi bi-code-slash me-2"></i>Додати мову
+                                    </a>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <a asp-controller="System" asp-action="Backup" class="btn btn-outline-info w-100 btn-modern">
+                                        <i class="bi bi-download me-2"></i>Резервна копія
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
