@@ -1,0 +1,342 @@
+﻿/* Challenges Page - Force Light Theme */
+
+/* CRITICAL: Override all dark theme styles */
+body {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+/* Force all text to be dark */
+* {
+    color: #212529;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1f2937 !important;
+}
+
+.text-muted,
+.text-muted * {
+    color: #6b7280 !important;
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.filter-card {
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    color: #212529 !important;
+}
+
+    .filter-card * {
+        color: #212529 !important;
+    }
+
+    .filter-card .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-radius: 12px 12px 0 0;
+        padding: 1rem 1.25rem;
+        border: none;
+    }
+
+        .filter-card .card-header * {
+            color: white !important;
+        }
+
+    .filter-card .card-body {
+        background: white !important;
+    }
+
+    .filter-card .form-label {
+        color: #374151 !important;
+        font-weight: 600;
+    }
+
+    .filter-card .form-check-label {
+        color: #374151 !important;
+    }
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+    .filter-options .form-check {
+        padding-left: 1.5rem;
+    }
+
+    .filter-options .form-check-input {
+        margin-top: 0.25rem;
+        background-color: white;
+        border-color: #d1d5db;
+    }
+
+    .filter-options .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Progress Items */
+.progress-item .progress {
+    height: 6px;
+    background-color: #e5e7eb !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-item .progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+.progress-item small {
+    color: #6b7280 !important;
+}
+
+/* Challenge Cards */
+.challenge-card {
+    background: white !important;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+    .challenge-card * {
+        color: #212529 !important;
+    }
+
+    .challenge-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .challenge-card.difficulty-easy {
+        border-left: 4px solid #48bb78;
+    }
+
+        .challenge-card.difficulty-easy:hover {
+            border-color: #48bb78;
+        }
+
+    .challenge-card.difficulty-medium {
+        border-left: 4px solid #ed8936;
+    }
+
+        .challenge-card.difficulty-medium:hover {
+            border-color: #ed8936;
+        }
+
+    .challenge-card.difficulty-hard {
+        border-left: 4px solid #f56565;
+    }
+
+        .challenge-card.difficulty-hard:hover {
+            border-color: #f56565;
+        }
+
+.challenge-header {
+    flex-grow: 1;
+}
+
+.challenge-title {
+    color: #1f2937 !important;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.challenge-description {
+    color: #6b7280 !important;
+    line-height: 1.6;
+    min-height: 60px;
+}
+
+.challenge-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+    .challenge-footer small {
+        color: #374151 !important;
+    }
+
+/* Bookmark Button */
+.bookmark-btn {
+    color: #9ca3af !important;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+    .bookmark-btn:hover,
+    .bookmark-btn.active {
+        color: #f59e0b !important;
+    }
+
+/* Badges */
+.badge {
+    padding: 0.35rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: white !important;
+}
+
+    .badge.bg-secondary {
+        background-color: #6b7280 !important;
+        color: white !important;
+    }
+
+/* Input Groups */
+.input-group-text {
+    background-color: #f3f4f6 !important;
+    border: 1px solid #e5e7eb;
+    border-right: none;
+    color: #6b7280 !important;
+}
+
+.input-group .form-control {
+    border-left: none;
+    background-color: white !important;
+    color: #212529 !important;
+    border-color: #e5e7eb;
+}
+
+    .input-group .form-control::placeholder {
+        color: #9ca3af !important;
+    }
+
+    .input-group .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        background-color: white !important;
+        color: #212529 !important;
+    }
+
+/* Buttons */
+.btn {
+    color: #212529;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: #e5e7eb;
+    color: #374151 !important;
+    background-color: white;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: #f3f4f6;
+        border-color: #d1d5db;
+        color: #1f2937 !important;
+    }
+
+/* Dropdown */
+.dropdown-menu {
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white !important;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    color: #374151 !important;
+}
+
+    .dropdown-item:hover {
+        background-color: #f3f4f6;
+        color: #1f2937 !important;
+    }
+
+    .dropdown-item i {
+        width: 20px;
+        color: #6b7280;
+    }
+
+/* Pagination */
+.pagination {
+    gap: 0.5rem;
+}
+
+.page-link {
+    border: 1px solid #e5e7eb;
+    color: #374151 !important;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+    .page-link:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: transparent;
+        color: white !important;
+    }
+
+.page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white !important;
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f3f4f6;
+    color: #9ca3af !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filters-sidebar {
+        position: static;
+    }
+
+    .challenge-card {
+        margin-bottom: 1rem;
+    }
+
+    .challenge-description {
+        min-height: auto;
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.challenge-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Hidden class for filtering */
+.hidden {
+    display: none !important;
+}

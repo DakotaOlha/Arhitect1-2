@@ -1,464 +1,256 @@
-﻿@{
+﻿@model List<Laba1_2.Models.Challenge>
+@{
     ViewData["Title"] = "Завдання з програмування";
 }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+@section Styles {
+    <link rel="stylesheet" href="~/css/challenges.css" asp-append-version="true" />
+}
 
-<style>
-    :root {
-        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        --danger-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-        --dark-bg: #0f1419;
-        --card-bg: rgba(26, 31, 46, 0.8);
-        --border-color: #2d3748;
-        --text-primary: #ffffff;
-        --text-secondary: #a0aec0;
-        --border-radius: 16px;
-        --transition: all 0.3s ease;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background: var(--dark-bg);
-        color: var(--text-primary);
-        position: relative;
-        min-height: 100vh;
-    }
-
-    .page-container {
-        position: relative;
-        z-index: 1;
-    }
-
-    .background-effects {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
-        z-index: 0;
-    }
-
-    .card-modern {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--border-radius);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        transition: var(--transition);
-    }
-
-        .card-modern:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-        }
-
-    .btn-modern {
-        border-radius: 12px;
-        padding: 12px 24px;
-        font-weight: 600;
-        transition: var(--transition);
-        border: none;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-primary-modern {
-        background: var(--primary-gradient);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-success-modern {
-        background: var(--success-gradient);
-    }
-
-    .btn-warning-modern {
-        background: var(--warning-gradient);
-        color: white !important;
-    }
-
-    .btn-modern:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-    }
-
-    .form-control-modern {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        color: var(--text-primary);
-        padding: 12px 16px;
-        transition: var(--transition);
-    }
-
-        .form-control-modern:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
-            color: var(--text-primary);
-        }
-
-    .challenge-card {
-        transition: var(--transition);
-        height: 100%;
-        position: relative;
-        border-left: 4px solid transparent;
-    }
-
-        .challenge-card:hover {
-            transform: translateY(-5px);
-        }
-
-    .difficulty-easy {
-        border-left-color: #4facfe;
-    }
-
-    .difficulty-medium {
-        border-left-color: #f093fb;
-    }
-
-    .difficulty-hard {
-        border-left-color: #ff9a9e;
-    }
-
-    .badge-modern {
-        backdrop-filter: blur(10px);
-        border-radius: 8px;
-        font-weight: 500;
-        transition: var(--transition);
-    }
-
-    .badge-success {
-        background: var(--success-gradient) !important;
-    }
-
-    .badge-warning {
-        background: var(--warning-gradient) !important;
-        color: white !important;
-    }
-
-    .badge-danger {
-        background: var(--danger-gradient) !important;
-    }
-
-    .badge-dark {
-        background: rgba(255, 255, 255, 0.1) !important;
-    }
-
-    .tag-badge {
-        background: rgba(255, 255, 255, 0.1) !important;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-        .tag-badge:hover {
-            background: rgba(102, 126, 234, 0.3) !important;
-            transform: translateY(-2px);
-        }
-
-    .progress-modern {
-        height: 8px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .progress-bar-modern {
-        border-radius: 10px;
-    }
-
-    .filter-section {
-        position: sticky;
-        top: 2rem;
-    }
-
-    .page-link-modern {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
-        color: var(--text-primary);
-        margin: 0 4px;
-        border-radius: 10px;
-        transition: var(--transition);
-    }
-
-        .page-link-modern:hover {
-            background: var(--primary-gradient);
-            border-color: transparent;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-    .dropdown-modern {
-        background: rgba(26, 31, 46, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .stats-item {
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-        .stats-item:last-child {
-            border-bottom: none;
-        }
-
-    @@media (max-width: 768px) {
-        .challenge-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .filter-section {
-            position: static;
-        }
-    }
-</style>
-
-<div class="background-effects"></div>
-<div class="page-container">
-    <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 mb-4">
-                <div class="filter-section">
-                    <div class="card card-modern mb-4">
-                        <div class="card-header bg-transparent border-bottom-0 pb-2">
-                            <h5 class="fw-bold mb-0">
-                                <i class="bi bi-funnel me-2"></i>Фільтри
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Пошук</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-dark border-end-0">
-                                        <i class="bi bi-search text-muted"></i>
-                                    </span>
-                                    <input type="text" class="form-control-modern border-start-0" placeholder="Назва завдання...">
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Складність</label>
-                                <div class="list-group list-group-flush">
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox" checked>
-                                        <span class="badge badge-success me-2">Easy</span>
-                                        <span class="text-muted small">(45)</span>
-                                    </label>
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox" checked>
-                                        <span class="badge badge-warning me-2">Medium</span>
-                                        <span class="text-muted small">(32)</span>
-                                    </label>
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox">
-                                        <span class="badge badge-danger me-2">Hard</span>
-                                        <span class="text-muted small">(18)</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Мови програмування</label>
-                                <div class="list-group list-group-flush">
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox" checked>
-                                        <i class="bi bi-filetype-py text-success me-2"></i>Python
-                                    </label>
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox" checked>
-                                        <i class="bi bi-filetype-js text-warning me-2"></i>JavaScript
-                                    </label>
-                                    <label class="list-group-item bg-transparent px-0 py-2">
-                                        <input class="form-check-input me-2" type="checkbox">
-                                        <i class="bi bi-filetype-cs text-primary me-2"></i>C#
-                                    </label>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary-modern btn-modern w-100">
-                                <i class="bi bi-funnel me-2"></i>Застосувати фільтри
-                            </button>
-                        </div>
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="filters-sidebar">
+                <div class="card filter-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="bi bi-funnel me-2"></i>Фільтри
+                        </h5>
                     </div>
+                    <div class="card-body">
+                        <!-- Search -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Пошук</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Назва завдання...">
+                            </div>
+                        </div>
 
-                    <div class="card card-modern">
-                        <div class="card-body">
-                            <h6 class="fw-bold mb-3">
-                                <i class="bi bi-graph-up me-2"></i>Ваш прогрес
-                            </h6>
-
-                            <div class="stats-item">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <small class="text-muted">Завершено завдань</small>
-                                    <small class="fw-bold">12/95</small>
+                        <!-- Difficulty Filter -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Складність</label>
+                            <div class="filter-options">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="difficultyEasy" value="easy" checked>
+                                    <label class="form-check-label" for="difficultyEasy">
+                                        <span class="badge bg-success me-2">Легкий</span>
+                                        <span class="text-muted small">(@Model.Count(c => c.DifficultyLevel <= 3))</span>
+                                    </label>
                                 </div>
-                                <div class="progress progress-modern">
-                                    <div class="progress-bar progress-bar-modern bg-success" style="width: 12%"></div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="difficultyMedium" value="medium" checked>
+                                    <label class="form-check-label" for="difficultyMedium">
+                                        <span class="badge bg-warning me-2">Середній</span>
+                                        <span class="text-muted small">(@Model.Count(c => c.DifficultyLevel >= 4 && c.DifficultyLevel <= 6))</span>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="difficultyHard" value="hard" checked>
+                                    <label class="form-check-label" for="difficultyHard">
+                                        <span class="badge bg-danger me-2">Складний</span>
+                                        <span class="text-muted small">(@Model.Count(c => c.DifficultyLevel >= 7))</span>
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="stats-item">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <small class="text-muted">Easy</small>
-                                    <small class="fw-bold">8/45</small>
+                        <!-- Language Filter -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Мови програмування</label>
+                            <div class="filter-options">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="langPython" checked>
+                                    <label class="form-check-label" for="langPython">
+                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
+                                    </label>
                                 </div>
-                                <div class="progress progress-modern">
-                                    <div class="progress-bar progress-bar-modern bg-success" style="width: 18%"></div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="langJavaScript" checked>
+                                    <label class="form-check-label" for="langJavaScript">
+                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="langCSharp" checked>
+                                    <label class="form-check-label" for="langCSharp">
+                                        <i class="bi bi-code text-primary me-1"></i>C#
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="langJava" checked>
+                                    <label class="form-check-label" for="langJava">
+                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="stats-item">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <small class="text-muted">Medium</small>
-                                    <small class="fw-bold">4/32</small>
-                                </div>
-                                <div class="progress progress-modern">
-                                    <div class="progress-bar progress-bar-modern bg-warning" style="width: 12%"></div>
-                                </div>
+                        <button class="btn btn-primary w-100" id="applyFilters">
+                            <i class="bi bi-check-circle me-2"></i>Застосувати
+                        </button>
+                        <button class="btn btn-outline-secondary w-100 mt-2" id="resetFilters">
+                            <i class="bi bi-arrow-counterclockwise me-2"></i>Скинути
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="card filter-card mt-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3">
+                            <i class="bi bi-graph-up me-2"></i>Ваш прогрес
+                        </h6>
+                        <div class="progress-item mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Загалом</small>
+                                <small class="fw-bold">12/95</small>
                             </div>
-
-                            <div class="stats-item">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <small class="text-muted">Hard</small>
-                                    <small class="fw-bold">0/18</small>
-                                </div>
-                                <div class="progress progress-modern">
-                                    <div class="progress-bar progress-bar-modern bg-danger" style="width: 0%"></div>
-                                </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" style="width: 12%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Легкі</small>
+                                <small class="fw-bold">8/45</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 18%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Середні</small>
+                                <small class="fw-bold">4/32</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 12%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Складні</small>
+                                <small class="fw-bold">0/18</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-lg-9 col-md-8">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2 class="fw-bold mb-1">
-                            <i class="bi bi-code-slash me-2"></i>Завдання з програмування
-                        </h2>
-                        <p class="text-muted mb-0">Практикуйте свої навички на різноманітних завданнях</p>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary btn-modern dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="bi bi-sort-down me-2"></i>Сортування
-                        </button>
-                        <ul class="dropdown-menu dropdown-modern">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-trophy me-2"></i>За складністю</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-heart me-2"></i>За популярністю</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar me-2"></i>За датою додавання</a></li>
-                        </ul>
-                    </div>
+        <!-- Main Content -->
+        <div class="col-lg-9 col-md-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">
+                        <i class="bi bi-code-slash me-2"></i>Завдання з програмування
+                    </h2>
+                    <p class="text-muted mb-0">Практикуйте свої навички на @Model.Count завданнях</p>
                 </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-sort-down me-2"></i>Сортування
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-sort="difficulty"><i class="bi bi-bar-chart me-2"></i>За складністю</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="title"><i class="bi bi-sort-alpha-down me-2"></i>За назвою</a></li>
+                        <li><a class="dropdown-item" href="#" data-sort="points"><i class="bi bi-trophy me-2"></i>За балами</a></li>
+                    </ul>
+                </div>
+            </div>
 
-                <div class="row g-3">
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="card card-modern challenge-card difficulty-easy">
-                            <div class="card-body">
+            <!-- Challenges Grid -->
+            <div class="row g-4" id="challengesGrid">
+                @foreach (var challenge in Model)
+                {
+                    var difficultyClass = challenge.DifficultyLevel <= 3 ? "easy" : challenge.DifficultyLevel <= 6 ? "medium" : "hard";
+                    var difficultyBadge = challenge.DifficultyLevel <= 3 ? "success" : challenge.DifficultyLevel <= 6 ? "warning" : "danger";
+                    var difficultyText = challenge.DifficultyLevel <= 3 ? "Легкий" : challenge.DifficultyLevel <= 6 ? "Середній" : "Складний";
+
+                    <div class="col-xl-4 col-lg-6 challenge-item" 
+                         data-difficulty="@difficultyClass" 
+                         data-title="@challenge.Title.ToLower()"
+                         data-points="@challenge.Points">
+                        <div class="challenge-card difficulty-@difficultyClass">
+                            <div class="challenge-header">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <span class="badge badge-success badge-modern">Easy</span>
-                                    <button class="btn btn-sm btn-link text-muted p-0">
+                                    <span class="badge bg-@difficultyBadge">@difficultyText</span>
+                                    <button class="btn btn-link p-0 bookmark-btn" data-id="@challenge.Id">
                                         <i class="bi bi-bookmark"></i>
                                     </button>
                                 </div>
-
-                                <h6 class="fw-bold mb-2">Two Sum</h6>
-                                <p class="text-muted small mb-3">Знайдіть два числа в масиві, які в сумі дають задане значення...</p>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person-check text-warning me-1 small"></i>
-                                        <small class="text-muted">78% успішність</small>
-                                    </div>
-                                    <a href="#" class="btn btn-warning-modern btn-modern btn-sm">
-                                        <i class="bi bi-clock me-1"></i>В процесі
-                                    </a>
-                                </div>
+                                <h5 class="challenge-title fw-bold mb-2">@challenge.Title</h5>
+                                <p class="challenge-description text-muted small mb-3">
+                                    @(challenge.Description.Length > 100 ? challenge.Description.Substring(0, 100) + "..." : challenge.Description)
+                                </p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="card card-modern challenge-card difficulty-medium">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <span class="badge badge-warning badge-modern">Medium</span>
-                                    <button class="btn btn-sm btn-link text-muted p-0">
-                                        <i class="bi bi-bookmark"></i>
-                                    </button>
+                            <div class="challenge-footer">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    @foreach (var cl in challenge.ChallengeLanguages.Take(3))
+                                    {
+                                        <span class="badge bg-secondary">
+                                            <i class="bi bi-code me-1"></i>@cl.Language.Name
+                                        </span>
+                                    }
+                                    @if (challenge.ChallengeLanguages.Count > 3)
+                                    {
+                                        <span class="badge bg-secondary">+@(challenge.ChallengeLanguages.Count - 3)</span>
+                                    }
                                 </div>
-
-                                <h6 class="fw-bold mb-2">Binary Search</h6>
-                                <p class="text-muted small mb-3">Реалізуйте алгоритм бінарного пошуку для відсортованого масиву...</p>
-
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person-check text-warning me-1 small"></i>
-                                        <small class="text-muted">65% успішність</small>
+                                    <div>
+                                        <i class="bi bi-trophy text-warning me-1"></i>
+                                        <small class="fw-bold">@challenge.Points балів</small>
                                     </div>
-                                    <a href="#" class="btn btn-primary-modern btn-modern btn-sm">
+                                    <a asp-action="Details" asp-route-id="@challenge.Id" class="btn btn-primary btn-sm">
                                         <i class="bi bi-play-circle me-1"></i>Розв'язати
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
-
-                <nav aria-label="Page navigation" class="mt-4">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link page-link-modern" href="#" tabindex="-1">
-                                <i class="bi bi-chevron-left me-1"></i>Назад
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link page-link-modern" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link page-link-modern" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link page-link-modern" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link page-link-modern" href="#">
-                                Вперед<i class="bi bi-chevron-right ms-1"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                }
             </div>
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
+                    <h4 class="mt-3">Немає доступних завдань</h4>
+                    <p class="text-muted">Скоро з'являться нові завдання!</p>
+                </div>
+            }
+
+            <!-- Pagination -->
+            <nav class="mt-5" id="pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const bookmarks = document.querySelectorAll('.bi-bookmark');
-        bookmarks.forEach(bookmark => {
-            bookmark.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.classList.toggle('bi-bookmark-fill');
-                this.classList.toggle('text-warning');
-            });
-        });
-
-        const cards = document.querySelectorAll('.challenge-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    });
-</script>
+@section Scripts {
+    <script src="~/js/challenges.js" asp-append-version="true"></script>
+}
