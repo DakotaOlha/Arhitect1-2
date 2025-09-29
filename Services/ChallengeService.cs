@@ -62,7 +62,6 @@ namespace Laba1_2.Services
         {
             try
             {
-                // Get challenge and language info
                 var challenge = await _context.Challenges
                     .FirstOrDefaultAsync(c => c.Id == solution.ChallengeId);
 
@@ -72,21 +71,17 @@ namespace Laba1_2.Services
                 if (challenge == null || language == null)
                     return false;
 
-                // Execute the code
                 var executionResult = await _codeExecutionService
                     .ExecuteCodeAsync(solution.Code, language, challenge.TestCases);
 
-                // Update solution with results
                 solution.IsSuccessful = executionResult.IsSuccessful;
                 solution.ExecutionTimeMs = executionResult.ExecutionTimeMs;
                 solution.ErrorMessage = executionResult.ErrorMessage;
                 solution.PointsEarned = executionResult.IsSuccessful ? challenge.Points : 0;
 
-                // Save solution
                 _context.Solutions.Add(solution);
                 await _context.SaveChangesAsync();
 
-                // Create result records
                 foreach (var testResult in executionResult.TestResults)
                 {
                     var result = new Result
@@ -105,7 +100,6 @@ namespace Laba1_2.Services
                     _context.Results.Add(result);
                 }
 
-                // Update user statistics if successful
                 if (solution.IsSuccessful)
                 {
                     var user = await _context.Users.FindAsync(solution.UserId);
@@ -164,7 +158,6 @@ namespace Laba1_2.Services
                 LastSubmission = solutions.Any() ? solutions.Max(s => s.SubmittedAt) : DateTime.MinValue
             };
 
-            // Find favorite language
             var languageUsage = solutions
                 .GroupBy(s => s.Language.Name)
                 .OrderByDescending(g => g.Count())

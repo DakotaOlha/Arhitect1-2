@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Laba1_2.Models
 {
-    // Many-to-many relationship between Challenge and Language
     public class ChallengeLanguage
     {
         [Key]
@@ -15,9 +14,8 @@ namespace Laba1_2.Models
         [Required]
         public int LanguageId { get; set; }
 
-        public string? StarterCode { get; set; } // Template code for specific language
+        public string? StarterCode { get; set; }
 
-        // Navigation properties
         [ForeignKey("ChallengeId")]
         public virtual Challenge Challenge { get; set; } = null!;
 

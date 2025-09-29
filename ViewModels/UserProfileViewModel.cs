@@ -26,13 +26,10 @@ namespace Laba1_2.ViewModels
         public DateTime CreatedAt { get; set; }
         public DateTime LastLoginAt { get; set; }
 
-        // Statistics
         public UserStatistics Statistics { get; set; } = new();
 
-        // Recent solutions
         public List<Solution> RecentSolutions { get; set; } = new();
 
-        // User roles
         public List<string> Roles { get; set; } = new();
     }
 }

@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -576,3 +576,27 @@ body {
     .list-group-item:hover {
         background: rgba(255, 255, 255, 0.05);
     }
+
+
+/* Додайте ці стилі до кінця вашого site.css */
+
+.main-card, .welcome-card {
+    /* Робимо їх світлими, якщо це необхідно */
+    background-color: #ffffff;
+    color: #212529; /* Темний текст */
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    /* Ви можете використовувати тут один з ваших градієнтів */
+    background: var(--primary-gradient);
+}

@@ -20,7 +20,6 @@ namespace Laba1_2.Services
 
             try
             {
-                // Parse test cases from JSON
                 var testCaseList = JsonSerializer.Deserialize<List<TestCase>>(testCases);
                 if (testCaseList == null || !testCaseList.Any())
                 {
@@ -28,14 +27,12 @@ namespace Laba1_2.Services
                     return result;
                 }
 
-                // Execute code for each test case
                 foreach (var testCase in testCaseList)
                 {
                     var testResult = await ExecuteSingleTestCase(code, language, testCase);
                     result.TestResults.Add(testResult);
                 }
 
-                // Determine overall success
                 result.IsSuccessful = result.TestResults.All(t => t.Passed);
                 result.ExecutionTimeMs = (int)stopwatch.ElapsedMilliseconds;
             }
@@ -65,8 +62,6 @@ namespace Laba1_2.Services
 
             try
             {
-                // This is a simplified implementation
-                // In a real application, you would execute code in a sandboxed environment
                 var actualOutput = await ExecuteCodeInSandbox(code, language, testCase.Input);
 
                 testResult.ActualOutput = actualOutput.Trim();
@@ -88,8 +83,6 @@ namespace Laba1_2.Services
 
         private async Task<string> ExecuteCodeInSandbox(string code, Language language, string input)
         {
-            // WARNING: This is a simplified implementation for demonstration purposes
-            // In a production environment, you should use proper sandboxing (Docker, etc.)
 
             switch (language.Name.ToLower())
             {
@@ -107,7 +100,6 @@ namespace Laba1_2.Services
 
         private async Task<string> ExecutePython(string code, string input)
         {
-            // Генеруємо унікальний тимчасовий файл
             var tempFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".py");
 
             try
@@ -128,34 +120,29 @@ namespace Laba1_2.Services
                 using var process = new Process { StartInfo = processInfo, EnableRaisingEvents = true };
                 process.Start();
 
-                // Надати вхідні дані (якщо є)
                 if (!string.IsNullOrEmpty(input))
                 {
                     await process.StandardInput.WriteAsync(input);
                 }
                 process.StandardInput.Close();
 
-                // Очікуємо завершення або таймаут
                 var waitTask = process.WaitForExitAsync();
                 var timeoutTask = Task.Delay(TimeSpan.FromSeconds(5));
 
                 var completed = await Task.WhenAny(waitTask, timeoutTask);
                 if (completed != waitTask)
                 {
-                    // таймаут — намагаємось вбити процес і викинути виняток
                     try
                     {
                         if (!process.HasExited) process.Kill();
                     }
-                    catch { /* ігноруємо помилки при вбиванні процесу */ }
+                    catch { /* ігноруємо */ }
 
                     throw new TimeoutException("Code execution timed out");
                 }
 
-                // гарантуємо, що процес завершився
                 await waitTask;
 
-                // Зчитуємо вивід та помилки
                 var output = await process.StandardOutput.ReadToEndAsync();
                 var error = await process.StandardError.ReadToEndAsync();
 
@@ -173,23 +160,19 @@ namespace Laba1_2.Services
                     if (File.Exists(tempFile))
                         File.Delete(tempFile);
                 }
-                catch { /* не критично, можна логувати */ }
+                catch { /* не критично */ }
             }
         }
 
         private async Task<string> ExecuteCSharp(string code, string input)
         {
-            // This would require more complex implementation with Roslyn compiler
-            // For now, return a placeholder
-            await Task.Delay(100); // Simulate execution time
+            await Task.Delay(100);
             return "C# execution not implemented yet";
         }
 
         private async Task<string> ExecuteJavaScript(string code, string input)
         {
-            // This would require Node.js integration
-            // For now, return a placeholder
-            await Task.Delay(100); // Simulate execution time
+            await Task.Delay(100);
             return "JavaScript execution not implemented yet";
         }
     }

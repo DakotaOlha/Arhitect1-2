@@ -1,20 +1,16 @@
 ﻿<!DOCTYPE html>
-<html lang="uk" data-bs-theme="dark">
+<html lang="uk">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CodeLearningPlatform</title>
 
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
@@ -50,7 +46,6 @@
                 <ul class="navbar-nav">
                     @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <!-- Notifications -->
                     <li class="nav-item dropdown">
                         <a class="nav-link position-relative" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-bell"></i>
@@ -66,7 +61,6 @@
                         </ul>
                     </li>
 
- <!-- User Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle me-1"></i>@User.Identity?.Name
@@ -118,7 +112,6 @@
             </div>
         </div>
     </nav>
-    <!-- Notification Messages -->
     <div class="container mt-3">
         @if (TempData["SuccessMessage"] != null)
     {
@@ -137,12 +130,10 @@
     }
     </div>
 
-    <!-- Main Content -->
     <main class="container-fluid px-0">
         @RenderBody()
     </main>
 
-    <!-- Footer -->
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container">
             <div class="row">
@@ -157,7 +148,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

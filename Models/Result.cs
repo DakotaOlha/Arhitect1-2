@@ -32,7 +32,6 @@ namespace Laba1_2.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Foreign keys
         [Required]
         public string UserId { get; set; } = string.Empty;
 
@@ -42,7 +41,6 @@ namespace Laba1_2.Models
         [Required]
         public int SolutionId { get; set; }
 
-        // Navigation properties
         [ForeignKey("UserId")]
         public virtual User User { get; set; } = null!;
 

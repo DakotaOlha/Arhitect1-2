@@ -37,7 +37,6 @@ namespace Laba1_2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Додаємо повідомлення про помилки валідації
                 TempData["ErrorMessage"] = "Будь ласка, виправте помилки в формі.";
                 return View(model);
             }
@@ -59,19 +58,16 @@ namespace Laba1_2.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Assign default role
                     await _userManager.AddToRoleAsync(user, "Student");
 
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Автоматичний вхід після реєстрації
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
                     TempData["SuccessMessage"] = "Реєстрація успішна! Ласкаво просимо на платформу.";
                     return RedirectToAction("Index", "Home");
                 }
 
-                // Додаємо помилки реєстрації
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -118,7 +114,6 @@ namespace Laba1_2.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Update last login time
                     var user = await _userManager.FindByEmailAsync(model.Email);
                     if (user != null)
                     {
@@ -129,7 +124,6 @@ namespace Laba1_2.Controllers
                     _logger.LogInformation("User {Email} logged in.", model.Email);
                     TempData["SuccessMessage"] = "Вітаємо! Ви успішно увійшли в систему.";
 
-                    // Безпечне перенаправлення
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);

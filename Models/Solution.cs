@@ -22,7 +22,6 @@ namespace Laba1_2.Models
         [Range(0, 1000)]
         public int PointsEarned { get; set; } = 0;
 
-        // Foreign keys
         [Required]
         public string UserId { get; set; } = string.Empty;
 
@@ -32,7 +31,6 @@ namespace Laba1_2.Models
         [Required]
         public int LanguageId { get; set; }
 
-        // Navigation properties
         [ForeignKey("UserId")]
         public virtual User User { get; set; } = null!;
 

@@ -41,11 +41,9 @@ namespace Laba1_2.ViewModels
         [Display(Name = "Активне завдання")]
         public bool IsActive { get; set; } = true;
 
-        // For creating/editing
         public List<int> SelectedLanguages { get; set; } = new();
         public Dictionary<int, string> StarterCode { get; set; } = new();
 
-        // For display
         public List<Language> AvailableLanguages { get; set; } = new();
         public List<ChallengeLanguage> ChallengeLanguages { get; set; } = new();
         public User? CreatedByUser { get; set; }

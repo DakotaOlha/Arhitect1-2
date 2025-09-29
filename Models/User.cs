@@ -24,7 +24,6 @@ namespace Laba1_2.Models
 
         public int SolvedChallenges { get; set; } = 0;
 
-        // Navigation properties
         public virtual ICollection<Solution> Solutions { get; set; } = new List<Solution>();
         public virtual ICollection<Result> Results { get; set; } = new List<Result>();
         public virtual ICollection<Challenge> CreatedChallenges { get; set; } = new List<Challenge>();

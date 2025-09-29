@@ -50,10 +50,8 @@ namespace Laba1_2.Areas.Admin.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            // Remove all current roles
             await _userManager.RemoveFromRolesAsync(user, userRoles);
 
-            // Add selected roles
             if (roles != null && roles.Count > 0)
             {
                 await _userManager.AddToRolesAsync(user, roles);

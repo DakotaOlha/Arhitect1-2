@@ -6,7 +6,7 @@ namespace Laba1_2.ViewModels
     {
         public List<LeaderboardEntry> TopUsers { get; set; } = new();
         public LeaderboardEntry? CurrentUserEntry { get; set; }
-        public string Period { get; set; } = "all"; // all, month, week
+        public string Period { get; set; } = "all"; 
     }
 
     public class LeaderboardEntry

@@ -21,9 +21,8 @@ namespace Laba1_2.Models
         public bool IsActive { get; set; } = true;
 
         [StringLength(50)]
-        public string? SyntaxHighlighting { get; set; } // For frontend syntax highlighting
+        public string? SyntaxHighlighting { get; set; }
 
-        // Navigation properties
         public virtual ICollection<Solution> Solutions { get; set; } = new List<Solution>();
         public ICollection<ChallengeLanguage> ChallengeLanguages { get; set; } = new List<ChallengeLanguage>();
     }

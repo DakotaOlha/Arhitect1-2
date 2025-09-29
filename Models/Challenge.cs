@@ -37,11 +37,9 @@ namespace Laba1_2.Models
 
         public DateTime? UpdatedAt { get; set; }
 
-        // Foreign key
         [Required]
         public string CreatedByUserId { get; set; } = string.Empty;
 
-        // Navigation properties
         [ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; } = null!;
 

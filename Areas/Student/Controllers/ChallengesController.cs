@@ -89,9 +89,6 @@ namespace Laba1_2.Areas.Student.Controllers
 
             _context.Solutions.Add(solution);
             await _context.SaveChangesAsync();
-
-            // Here you would implement code execution and testing logic
-            // For now, we'll just mark it as successful
             solution.IsSuccessful = true;
             solution.PointsEarned = 10;
             await _context.SaveChangesAsync();

@@ -33,7 +33,6 @@ namespace Laba1_2.Controllers
                 {
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    // Redirect based on user role
                     if (roles.Contains("Admin"))
                         return RedirectToAction("Index", "Home", new { area = "Admin" });
                     else if (roles.Contains("Mentor"))
@@ -43,7 +42,6 @@ namespace Laba1_2.Controllers
                 }
             }
 
-            // Show public landing page
             var recentChallenges = await _challengeService.GetActivesChallengesAsync();
             ViewBag.RecentChallenges = recentChallenges.Take(6).ToList();
 

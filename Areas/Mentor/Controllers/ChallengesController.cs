@@ -52,7 +52,6 @@ namespace Laba1_2.Areas.Mentor.Controllers
                 _context.Challenges.Add(challenge);
                 await _context.SaveChangesAsync();
 
-                // Add selected languages
                 foreach (var langId in selectedLanguages)
                 {
                     var challengeLanguage = new ChallengeLanguage

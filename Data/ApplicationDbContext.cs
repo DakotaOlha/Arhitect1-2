@@ -22,7 +22,6 @@ namespace Laba1_2.Data
         {
             base.OnModelCreating(builder);
 
-            // User configuration
             builder.Entity<User>(entity =>
             {
                 entity.Property(e => e.FirstName)
@@ -40,7 +39,6 @@ namespace Laba1_2.Data
                     .IsUnique();
             });
 
-            // Challenge configuration
             builder.Entity<Challenge>(entity =>
             {
                 entity.Property(e => e.Title)
@@ -78,7 +76,6 @@ namespace Laba1_2.Data
                 entity.HasIndex(e => e.IsActive);
             });
 
-            // Language configuration
             builder.Entity<Language>(entity =>
             {
                 entity.Property(e => e.Name)
@@ -102,7 +99,6 @@ namespace Laba1_2.Data
                     .IsUnique();
             });
 
-            // Solution configuration
             builder.Entity<Solution>(entity =>
             {
                 entity.Property(e => e.Code)
@@ -139,7 +135,6 @@ namespace Laba1_2.Data
                 entity.HasIndex(e => e.SubmittedAt);
             });
 
-            // Result configuration
             builder.Entity<Result>(entity =>
             {
                 entity.Property(e => e.Status)
@@ -171,7 +166,6 @@ namespace Laba1_2.Data
                 entity.HasIndex(e => e.CreatedAt);
             });
 
-            // ChallengeLanguage configuration
             builder.Entity<ChallengeLanguage>(entity =>
             {
                 entity.HasOne(e => e.Challenge)
@@ -188,13 +182,11 @@ namespace Laba1_2.Data
                     .IsUnique();
             });
 
-            // Seed data
             SeedData(builder);
         }
 
         private void SeedData(ModelBuilder builder)
         {
-            // Seed Languages
             builder.Entity<Language>().HasData(
                 new Language { Id = 1, Name = "C#", Extension = ".cs", Version = "12.0", IsActive = true, SyntaxHighlighting = "csharp" },
                 new Language { Id = 2, Name = "Python", Extension = ".py", Version = "3.11", IsActive = true, SyntaxHighlighting = "python" },
