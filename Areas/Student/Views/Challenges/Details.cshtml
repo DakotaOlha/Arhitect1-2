@@ -160,7 +160,6 @@
             const resultContainer = document.getElementById('resultContainer');
             const resultContent = document.getElementById('resultContent');
 
-            // Change starter code when language changes
             languageSelect.addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
                 const starterCode = selectedOption.getAttribute('data-starter');
@@ -169,12 +168,10 @@
                 }
             });
 
-            // Run code (test without submitting)
             runButton.addEventListener('click', async function() {
                 await submitSolution(false);
             });
 
-            // Submit solution
             solutionForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 await submitSolution(true);
@@ -184,7 +181,6 @@
                 const formData = new FormData(solutionForm);
                 const code = formData.get('code');
                 
-                // Валідація
                 if (!code || code.trim() === '') {
                     showError('Будь ласка, напишіть код перед відправкою!');
                     return;
@@ -198,7 +194,6 @@
 
                 console.log('Submitting solution:', data);
 
-                // Disable buttons
                 runButton.disabled = true;
                 submitButton.disabled = true;
                 runButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Виконується...';
@@ -223,7 +218,6 @@
                     const result = await response.json();
                     console.log('Result:', result);
                     
-                    // Show result
                     resultContainer.style.display = 'block';
                     
                     if (result.success) {
@@ -270,7 +264,6 @@
                         resultContent.innerHTML = errorHtml;
                     }
 
-                    // Scroll to results
                     resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
                 } catch (error) {
@@ -278,7 +271,6 @@
                     showError('Виникла помилка при відправці рішення: ' + error.message);
                 }
 
-                // Re-enable buttons
                 runButton.disabled = false;
                 submitButton.disabled = false;
                 runButton.innerHTML = '<i class="bi bi-play-circle me-2"></i>Запустити код';
