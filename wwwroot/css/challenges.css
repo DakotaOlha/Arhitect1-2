@@ -1,12 +1,10 @@
 ﻿/* Challenges Page - Force Light Theme */
 
-/* CRITICAL: Override all dark theme styles */
 body {
     background-color: #f8f9fa !important;
     color: #212529 !important;
 }
 
-/* Force all text to be dark */
 * {
     color: #212529;
 }
@@ -20,7 +18,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #6b7280 !important;
 }
 
-/* Filters Sidebar */
 .filters-sidebar {
     position: sticky;
     top: 2rem;
@@ -84,7 +81,6 @@ h1, h2, h3, h4, h5, h6 {
         user-select: none;
     }
 
-/* Progress Items */
 .progress-item .progress {
     height: 6px;
     background-color: #e5e7eb !important;
@@ -101,7 +97,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #6b7280 !important;
 }
 
-/* Challenge Cards */
 .challenge-card {
     background: white !important;
     border: 2px solid #e5e7eb;
@@ -173,7 +168,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #374151 !important;
     }
 
-/* Bookmark Button */
 .bookmark-btn {
     color: #9ca3af !important;
     transition: all 0.3s ease;
@@ -185,7 +179,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #f59e0b !important;
     }
 
-/* Badges */
 .badge {
     padding: 0.35rem 0.75rem;
     font-weight: 600;
@@ -198,7 +191,6 @@ h1, h2, h3, h4, h5, h6 {
         color: white !important;
     }
 
-/* Input Groups */
 .input-group-text {
     background-color: #f3f4f6 !important;
     border: 1px solid #e5e7eb;
@@ -224,7 +216,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #212529 !important;
     }
 
-/* Buttons */
 .btn {
     color: #212529;
 }
@@ -247,7 +238,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #1f2937 !important;
     }
 
-/* Dropdown */
 .dropdown-menu {
     border: 1px solid #e5e7eb;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -271,7 +261,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #6b7280;
     }
 
-/* Pagination */
 .pagination {
     gap: 0.5rem;
 }
@@ -304,7 +293,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #9ca3af !important;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .filters-sidebar {
         position: static;
@@ -319,7 +307,6 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Animations */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -336,7 +323,6 @@ h1, h2, h3, h4, h5, h6 {
     animation: slideIn 0.3s ease-out;
 }
 
-/* Hidden class for filtering */
 .hidden {
     display: none !important;
 }

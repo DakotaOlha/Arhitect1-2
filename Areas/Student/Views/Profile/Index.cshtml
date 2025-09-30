@@ -2,8 +2,10 @@
     ViewData["Title"] = "Мій профіль";
 }
 
+<link rel="stylesheet" href="~/css/profile.css?v=@DateTime.Now.Ticks" />
+
 <div class="container-fluid py-4">
-    <div class="row">
+    <div class="row g-4">
         <div class="col-lg-4 col-md-5">
             <div class="card card-modern">
                 <div class="card-body text-center">
@@ -11,21 +13,152 @@
                         <i class="bi bi-person-circle text-white fs-1"></i>
                     </div>
                     <h4 class="fw-bold">@User.Identity?.Name</h4>
-                    <p class="text-muted">Студент</p>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-outline-primary">Редагувати профіль</button>
-                        <button class="btn btn-outline-secondary">Змінити пароль</button>
+                    <span class="badge badge-student mb-3">Студент</span>
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-pencil me-2"></i>Редагувати профіль
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="bi bi-key me-2"></i>Змінити пароль
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-modern mt-4">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">
+                        <i class="bi bi-graph-up me-2"></i>Статистика
+                    </h6>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">25</span>
+                                <span class="profile-stat-label">Задач</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">1250</span>
+                                <span class="profile-stat-label">Балів</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">15</span>
+                                <span class="profile-stat-label">Рейтинг</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col-lg-8 col-md-7">
             <div class="card card-modern">
                 <div class="card-header bg-transparent border-bottom">
-                    <h4 class="fw-bold mb-0">Інформація профілю</h4>
+                    <h4 class="fw-bold mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Інформація профілю
+                    </h4>
                 </div>
                 <div class="card-body">
-                    <p>Тут буде детальна інформація профілю...</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-envelope me-2"></i>Email
+                                </label>
+                                <input type="email" class="form-control" value="@User.Identity?.Name" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-person me-2"></i>Ім'я користувача
+                                </label>
+                                <input type="text" class="form-control" value="@User.Identity?.Name" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-calendar me-2"></i>Дата реєстрації
+                                </label>
+                                <input type="text" class="form-control" value="@DateTime.Now.ToString("dd.MM.yyyy")" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-clock me-2"></i>Остання активність
+                                </label>
+                                <input type="text" class="form-control" value="@DateTime.Now.ToString("dd.MM.yyyy HH:mm")" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-file-text me-2"></i>Про себе
+                                </label>
+                                <textarea class="form-control" rows="4" readonly placeholder="Тут буде інформація про користувача..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-modern mt-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h4 class="fw-bold mb-0">
+                        <i class="bi bi-trophy me-2"></i>Досягнення
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <div class="achievement-badge">
+                            <i class="bi bi-star-fill text-warning achievement-icon"></i>
+                            <div>
+                                <div class="fw-bold">Перші кроки</div>
+                                <small class="text-muted">Завершено перше завдання</small>
+                            </div>
+                        </div>
+                        <div class="achievement-badge">
+                            <i class="bi bi-lightning-fill text-primary achievement-icon"></i>
+                            <div>
+                                <div class="fw-bold">Швидкий розум</div>
+                                <small class="text-muted">Розв'язано 10 задач</small>
+                            </div>
+                        </div>
+                        <div class="achievement-badge">
+                            <i class="bi bi-fire text-danger achievement-icon"></i>
+                            <div>
+                                <div class="fw-bold">Серія успіхів</div>
+                                <small class="text-muted">7 днів поспіль</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-modern mt-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h4 class="fw-bold mb-0">
+                        <i class="bi bi-clock-history me-2"></i>Остання активність
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="activity-item">
+                        <small class="text-muted d-block mb-1">2 години тому</small>
+                        <p class="mb-0">Завершено завдання <strong>"Two Sum"</strong></p>
+                    </div>
+                    <div class="activity-item">
+                        <small class="text-muted d-block mb-1">Вчора о 14:30</small>
+                        <p class="mb-0">Почато завдання <strong>"Binary Search"</strong></p>
+                    </div>
+                    <div class="activity-item">
+                        <small class="text-muted d-block mb-1">3 дні тому</small>
+                        <p class="mb-0">Отримано досягнення <strong>"Перші кроки"</strong></p>
+                    </div>
                 </div>
             </div>
         </div>

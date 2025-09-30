@@ -1,15 +1,13 @@
 ﻿@model List<Laba1_2.Models.Challenge>
 @{
     ViewData["Title"] = "Завдання з програмування";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/challenges.css" asp-append-version="true" />
-}
+<link rel="stylesheet" href="~/css/challenges.css?v=@DateTime.Now.Ticks" />
 
 <div class="container-fluid py-4">
     <div class="row">
-        <!-- Sidebar Filters -->
         <div class="col-lg-3 col-md-4 mb-4">
             <div class="filters-sidebar">
                 <div class="card filter-card">
@@ -19,7 +17,6 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <!-- Search -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Пошук</label>
                             <div class="input-group">
@@ -30,7 +27,6 @@
                             </div>
                         </div>
 
-                        <!-- Difficulty Filter -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Складність</label>
                             <div class="filter-options">
@@ -58,7 +54,6 @@
                             </div>
                         </div>
 
-                        <!-- Language Filter -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Мови програмування</label>
                             <div class="filter-options">
@@ -98,7 +93,6 @@
                     </div>
                 </div>
 
-                <!-- Progress Card -->
                 <div class="card filter-card mt-4">
                     <div class="card-body">
                         <h6 class="fw-bold mb-3">
@@ -145,9 +139,7 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="col-lg-9 col-md-8">
-            <!-- Header -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="fw-bold mb-1">
@@ -167,7 +159,6 @@
                 </div>
             </div>
 
-            <!-- Challenges Grid -->
             <div class="row g-4" id="challengesGrid">
                 @foreach (var challenge in Model)
                 {
@@ -229,7 +220,6 @@
                 </div>
             }
 
-            <!-- Pagination -->
             <nav class="mt-5" id="pagination">
                 <ul class="pagination justify-content-center">
                     <li class="page-item disabled">

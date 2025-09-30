@@ -92,7 +92,7 @@ namespace Laba1_2.Areas.Student.Controllers
             solution.IsSuccessful = true;
             solution.PointsEarned = 10;
             await _context.SaveChangesAsync();
-
+                
             return Json(new { success = true, message = "Solution submitted successfully!" });
         }
     }

@@ -1,11 +1,10 @@
 ﻿@model Laba1_2.Areas.Student.Controllers.StudentDashboardViewModel
 @{
     ViewData["Title"] = "Панель управління | Студент";
+     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/student-dashboard.css" asp-append-version="true" />
-}
+<link rel="stylesheet" href="~/css/student-dashboard.css?v=@DateTime.Now.Ticks" />
 
 <div class="container-fluid py-4">
     <!-- Welcome Header -->

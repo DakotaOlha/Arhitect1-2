@@ -88,7 +88,30 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+// ОНОВЛЕНО: Налаштування для статичних файлів
+if (app.Environment.IsDevelopment())
+{
+    // У режимі розробки вимикаємо кеш для CSS/JS
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        OnPrepareResponse = ctx =>
+        {
+            // Вимикаємо кеш для CSS і JS файлів під час розробки
+            if (ctx.File.Name.EndsWith(".css") || ctx.File.Name.EndsWith(".js"))
+            {
+                ctx.Context.Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+                ctx.Context.Response.Headers.Append("Pragma", "no-cache");
+                ctx.Context.Response.Headers.Append("Expires", "0");
+            }
+        }
+    });
+}
+else
+{
+    // У продакшені використовуємо стандартне кешування
+    app.UseStaticFiles();
+}
 
 app.UseRouting();
 
@@ -120,7 +143,6 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-// Initialize database and roles
 // Initialize database and roles
 using (var scope = app.Services.CreateScope())
 {
