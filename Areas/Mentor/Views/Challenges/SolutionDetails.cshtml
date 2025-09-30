@@ -1,0 +1,327 @@
+﻿@model Laba1_2.Models.Solution
+@{
+    ViewData["Title"] = "Деталі рішення";
+}
+
+<link rel="stylesheet" href="~/css/mentor.css?v=@DateTime.Now.Ticks" />
+
+<style>
+    .code-viewer {
+        background: #1e1e1e;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #444;
+    }
+    
+    .code-viewer-header {
+        background: #2d2d2d;
+        padding: 12px 16px;
+        border-bottom: 1px solid #444;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .code-viewer-header span {
+        color: #e5e7eb !important;
+        font-weight: 600;
+    }
+    
+    .code-viewer pre {
+        background: #1e1e1e !important;
+        color: #e5e7eb !important;
+        margin: 0;
+        padding: 1.5rem;
+        overflow-x: auto;
+    }
+    
+    .code-viewer code {
+        font-family: 'Courier New', 'Consolas', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #e5e7eb !important;
+    }
+    
+    .test-result-card {
+        border-left: 4px solid;
+        transition: all 0.3s ease;
+    }
+    
+    .test-result-card.passed {
+        border-left-color: #10b981;
+        background: #f0fdf4;
+    }
+    
+    .test-result-card.failed {
+        border-left-color: #ef4444;
+        background: #fef2f2;
+    }
+    
+    .test-result-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item"><a asp-action="Index">Мої завдання</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Details" asp-route-id="@Model.ChallengeId">@Model.Challenge.Title</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Solutions" asp-route-id="@Model.ChallengeId">Рішення</a></li>
+                    <li class="breadcrumb-item active">Деталі</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-file-code me-2"></i>Деталі рішення
+            </h2>
+        </div>
+        <a asp-action="Solutions" asp-route-id="@Model.ChallengeId" class="btn btn-outline-secondary btn-modern">
+            <i class="bi bi-arrow-left me-2"></i>Назад до списку
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <!-- Student Info Card -->
+            <div class="card card-modern mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="gradient-primary rounded-circle p-3 me-3" style="width: 60px; height: 60px;">
+                                <i class="bi bi-person text-white fs-3"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">@Model.User.FirstName @Model.User.LastName</h5>
+                                <p class="text-muted mb-0">
+                                    <i class="bi bi-envelope me-2"></i>@Model.User.Email
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            @if (Model.IsSuccessful)
+                            {
+                                <span class="badge bg-success fs-6 mb-2">
+                                    <i class="bi bi-check-circle me-1"></i>Успішно
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger fs-6 mb-2">
+                                    <i class="bi bi-x-circle me-1"></i>Невдало
+                                </span>
+                            }
+                            <p class="text-muted mb-0">
+                                <small>@Model.SubmittedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Viewer -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-code-slash me-2"></i>Код рішення
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="code-viewer">
+                        <div class="code-viewer-header">
+                            <span>solution.@Model.Language.Extension</span>
+                            <div>
+                                <span class="badge bg-secondary me-2">@Model.Language.Name</span>
+                                <button class="btn btn-sm btn-outline-light" onclick="copyCode()">
+                                    <i class="bi bi-clipboard"></i> Копіювати
+                                </button>
+                            </div>
+                        </div>
+                        <pre><code id="codeContent">@Model.Code</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Results -->
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-check-square me-2"></i>Результати тестів
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Results.Any())
+                    {
+                        <div class="row g-3">
+                            @foreach (var result in Model.Results)
+                            {
+                                <div class="col-12">
+                                    <div class="test-result-card @(result.Status == Laba1_2.Models.ResultStatus.Passed ? "passed" : "failed") card p-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="fw-bold mb-0">
+                                                @if (result.Status == Laba1_2.Models.ResultStatus.Passed)
+                                                {
+                                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                    <span class="text-success">Тест пройдено</span>
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-x-circle-fill text-danger me-2"></i>
+                                                    <span class="text-danger">Тест не пройдено</span>
+                                                }
+                                            </h6>
+                                            <small class="text-muted">@result.ExecutionTimeMs ms</small>
+                                        </div>
+                                        
+                                        @if (!string.IsNullOrEmpty(result.Input))
+                                        {
+                                            <div class="mb-2">
+                                                <small class="text-muted d-block mb-1"><strong>Вхідні дані:</strong></small>
+                                                <code class="d-block bg-light p-2 rounded">@result.Input</code>
+                                            </div>
+                                        }
+                                        
+                                        <div class="mb-2">
+                                            <small class="text-muted d-block mb-1"><strong>Очікуваний результат:</strong></small>
+                                            <code class="d-block bg-light p-2 rounded">@result.ExpectedOutput</code>
+                                        </div>
+                                        
+                                        <div class="mb-2">
+                                            <small class="text-muted d-block mb-1"><strong>Отриманий результат:</strong></small>
+                                            <code class="d-block bg-light p-2 rounded">@result.ActualOutput</code>
+                                        </div>
+                                        
+                                        @if (!string.IsNullOrEmpty(result.ErrorMessage))
+                                        {
+                                            <div class="alert alert-danger mb-0 mt-2">
+                                                <small><strong>Помилка:</strong> @result.ErrorMessage</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Немає результатів тестів</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Statistics Card -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-graph-up me-2"></i>Статистика
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Завдання</small>
+                            <small class="fw-bold">@Model.Challenge.Title</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Мова програмування</small>
+                            <small class="fw-bold">@Model.Language.Name</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Час виконання</small>
+                            <small class="fw-bold">@Model.ExecutionTimeMs ms</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Набрано балів</small>
+                            <small class="fw-bold text-@(Model.IsSuccessful ? "success" : "danger")">
+                                @Model.PointsEarned / @Model.Challenge.Points
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Пройдено тестів</small>
+                            <small class="fw-bold">
+                                @Model.Results.Count(r => r.Status == Laba1_2.Models.ResultStatus.Passed) / @Model.Results.Count
+                            </small>
+                        </div>
+                        <div class="progress progress-modern mt-2">
+                            @{
+                                var passedTests = Model.Results.Count(r => r.Status == Laba1_2.Models.ResultStatus.Passed);
+                                var totalTests = Model.Results.Count;
+                                var passRate = totalTests > 0 ? (passedTests * 100.0 / totalTests) : 0;
+                            }
+                            <div class="progress-bar bg-@(Model.IsSuccessful ? "success" : "danger")" 
+                                 style="width: @passRate%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">Дата відправки</small>
+                            <small class="fw-bold">@Model.SubmittedAt.ToString("dd.MM.yyyy")</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">Час відправки</small>
+                            <small class="fw-bold">@Model.SubmittedAt.ToString("HH:mm:ss")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge Info Card -->
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Про завдання
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Складність</small>
+                        <span class="badge bg-@(Model.Challenge.DifficultyLevel <= 3 ? "success" : Model.Challenge.DifficultyLevel <= 6 ? "warning" : "danger")">
+                            @(Model.Challenge.DifficultyLevel <= 3 ? "Легкий" : Model.Challenge.DifficultyLevel <= 6 ? "Середній" : "Складний")
+                        </span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Опис</small>
+                        <p class="mb-0 small">@Model.Challenge.Description</p>
+                    </div>
+                    
+                    <div>
+                        <a asp-action="Details" asp-route-id="@Model.ChallengeId" class="btn btn-outline-primary w-100 btn-modern">
+                            <i class="bi bi-eye me-2"></i>Переглянути завдання
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function copyCode() {
+            const codeContent = document.getElementById('codeContent').textContent;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                alert('Код скопійовано в буфер обміну!');
+            }).catch(err => {
+                console.error('Помилка копіювання:', err);
+            });
+        }
+    </script>
+}

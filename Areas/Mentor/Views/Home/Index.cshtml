@@ -2,18 +2,184 @@
     ViewData["Title"] = "Панель ментора";
 }
 
-<!-- Підключення CSS для ментора -->
 <link rel="stylesheet" href="~/css/mentor.css?v=@DateTime.Now.Ticks" />
 
 <div class="container-fluid py-4">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card-modern gradient-warning text-white">
+                <div class="card-body p-4 p-md-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="fw-bold mb-2 display-6" style="color: white !important;">
+                                Панель ментора 🎓
+                            </h2>
+                            <p class="mb-0 fs-5" style="color: white !important; opacity: 0.9;">
+                                Керуйте завданнями, перевіряйте рішення студентів та аналізуйте прогрес
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <div class="d-inline-block">
+                                <a asp-controller="Challenges" asp-action="Create" 
+                                   class="btn btn-light btn-lg btn-modern">
+                                    <i class="bi bi-plus-circle me-2"></i>Створити завдання
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-4">
-        <!-- Sidebar -->
-        <div class="col-lg-3 col-md-4">
-            <!-- Profile Card -->
+        <!-- Quick Actions -->
+        <div class="col-lg-8">
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="card card-modern h-100 border-start border-5 border-warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="gradient-warning rounded p-3 me-3 icon-circle">
+                                    <i class="bi bi-journal-code text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="fw-bold mb-0">Мої завдання</h3>
+                                    <small class="text-muted">Керування завданнями</small>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Переглядайте список ваших завдань, редагуйте їх або створюйте нові
+                            </p>
+                            <a asp-controller="Challenges" asp-action="Index" 
+                               class="btn btn-warning btn-modern w-100">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Перейти до завдань
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-modern h-100 border-start border-5 border-success">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="gradient-success rounded p-3 me-3 icon-circle">
+                                    <i class="bi bi-code-square text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="fw-bold mb-0">Рішення</h3>
+                                    <small class="text-muted">Перегляд та аналіз</small>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Переглядайте рішення студентів та аналізуйте їх прогрес
+                            </p>
+                            <a asp-controller="Challenges" asp-action="Index" 
+                               class="btn btn-success btn-modern w-100">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Переглянути рішення
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-modern h-100 border-start border-5 border-primary">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="gradient-primary rounded p-3 me-3 icon-circle">
+                                    <i class="bi bi-plus-circle text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="fw-bold mb-0">Нове завдання</h3>
+                                    <small class="text-muted">Створення завдання</small>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Створіть нове завдання для ваших студентів
+                            </p>
+                            <a asp-controller="Challenges" asp-action="Create" 
+                               class="btn btn-primary btn-modern w-100">
+                                <i class="bi bi-plus-circle me-2"></i>Створити завдання
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-modern h-100 border-start border-5 border-info">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="gradient-info rounded p-3 me-3 icon-circle">
+                                    <i class="bi bi-graph-up text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="fw-bold mb-0">Статистика</h3>
+                                    <small class="text-muted">Аналітика</small>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">
+                                Переглядайте статистику по завданням та студентам
+                            </p>
+                            <a asp-controller="Challenges" asp-action="Index" 
+                               class="btn btn-info btn-modern w-100">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Переглянути статистику
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
             <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-clock-history me-2"></i>Остання активність
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-success"></div>
+                            <div class="timeline-content">
+                                <small class="text-muted d-block mb-1">2 години тому</small>
+                                <p class="mb-0">Студент виконав завдання "Two Sum"</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-primary"></div>
+                            <div class="timeline-content">
+                                <small class="text-muted d-block mb-1">4 години тому</small>
+                                <p class="mb-0">Створено нове завдання "Binary Search"</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-warning"></div>
+                            <div class="timeline-content">
+                                <small class="text-muted d-block mb-1">Вчора</small>
+                                <p class="mb-0">Отримано 5 нових рішень</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-info"></div>
+                            <div class="timeline-content">
+                                <small class="text-muted d-block mb-1">2 дні тому</small>
+                                <p class="mb-0">Оновлено завдання "Palindrome Check"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Profile Card -->
+            <div class="card card-modern mb-4">
                 <div class="card-body">
                     <div class="text-center mb-4">
-                        <div class="gradient-warning rounded-circle p-2 d-inline-flex mb-3">
+                        <div class="gradient-warning rounded-circle p-3 d-inline-flex mb-3" 
+                             style="width: 100px; height: 100px;">
                             <i class="bi bi-person-gear text-white fs-1"></i>
                         </div>
                         <h5 class="fw-bold">@User.Identity?.Name</h5>
@@ -30,25 +196,37 @@
                         <a class="nav-link" asp-controller="Challenges" asp-action="Create">
                             <i class="bi bi-plus-circle me-2"></i>Створити завдання
                         </a>
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-check-circle me-2"></i>Перевірка рішень
-                        </a>
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-people me-2"></i>Студенти
-                        </a>
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-graph-up me-2"></i>Аналітика
-                        </a>
                     </nav>
                 </div>
             </div>
 
-            <!-- Stats Card -->
-            <div class="card card-modern mt-4">
+            <!-- Statistics Card -->
+            <div class="card card-modern mb-4">
                 <div class="card-body">
                     <h6 class="fw-bold mb-3">
                         <i class="bi bi-bar-chart me-2"></i>Моя статистика
                     </h6>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <h3 class="fw-bold text-warning mb-0">15</h3>
+                                <small class="text-muted">Завдань</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <h3 class="fw-bold text-success mb-0">128</h3>
+                                <small class="text-muted">Рішень</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <h3 class="fw-bold text-info mb-0">45</h3>
+                                <small class="text-muted">Студентів</small>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3">
                     <div class="mb-3">
                         <div class="d-flex justify-content-between mb-1">
                             <small>Створено завдань</small>
@@ -58,7 +236,7 @@
                             <div class="progress-bar bg-warning" style="width: 75%"></div>
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div>
                         <div class="d-flex justify-content-between mb-1">
                             <small>Перевірено рішень</small>
                             <small class="fw-bold">128</small>
@@ -69,266 +247,31 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="col-lg-9 col-md-8">
-            <!-- Welcome Card -->
-            <div class="card card-modern gradient-warning text-white mb-4">
+            <!-- Quick Tips -->
+            <div class="card card-modern">
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h3 class="fw-bold" style="color: white !important;">Панель ментора 🎓</h3>
-                            <p class="mb-0" style="color: white !important;">Керуйте завданнями, перевіряйте рішення студентів та аналізуйте прогрес.</p>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <i class="bi bi-person-gear fs-1 opacity-75" style="color: white !important;"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="row g-4 mb-4">
-                <div class="col-xl-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="gradient-warning rounded p-3 me-3 icon-circle">
-                                    <i class="bi bi-journal-code text-white fs-4"></i>
-                                </div>
-                                <div>
-                                    <h4 class="fw-bold mb-0">15</h4>
-                                    <small class="text-muted">Мої завдання</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="gradient-success rounded p-3 me-3 icon-circle">
-                                    <i class="bi bi-check-circle text-white fs-4"></i>
-                                </div>
-                                <div>
-                                    <h4 class="fw-bold mb-0">128</h4>
-                                    <small class="text-muted">Перевірено рішень</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="gradient-primary rounded p-3 me-3 icon-circle">
-                                    <i class="bi bi-people text-white fs-4"></i>
-                                </div>
-                                <div>
-                                    <h4 class="fw-bold mb-0">45</h4>
-                                    <small class="text-muted">Активних студентів</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="gradient-info rounded p-3 me-3 icon-circle">
-                                    <i class="bi bi-star text-white fs-4"></i>
-                                </div>
-                                <div>
-                                    <h4 class="fw-bold mb-0">4.8</h4>
-                                    <small class="text-muted">Рейтинг завдань</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Activity and Pending Reviews -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-6">
-                    <div class="card card-modern">
-                        <div class="card-header bg-transparent border-bottom">
-                            <h5 class="fw-bold mb-0">
-                                <i class="bi bi-clock-history me-2"></i>Останні події
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="timeline">
-                                <div class="timeline-item">
-                                    <div class="timeline-marker bg-success"></div>
-                                    <div class="timeline-content">
-                                        <small class="text-muted d-block mb-1">2 години тому</small>
-                                        <p class="mb-0">Студент John завершив завдання "Binary Search"</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-marker bg-primary"></div>
-                                    <div class="timeline-content">
-                                        <small class="text-muted d-block mb-1">4 години тому</small>
-                                        <p class="mb-0">Створено нове завдання "Graph Traversal"</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-marker bg-warning"></div>
-                                    <div class="timeline-content">
-                                        <small class="text-muted d-block mb-1">Вчора</small>
-                                        <p class="mb-0">Отримано 5 нових рішень для перевірки</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card card-modern">
-                        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold mb-0">
-                                <i class="bi bi-clipboard-check me-2"></i>Рішення для перевірки
-                            </h5>
-                            <a href="#" class="btn btn-sm btn-outline-primary">Всі рішення</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="list-group list-group-flush">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Two Sum Solution</h6>
-                                            <small class="text-muted">Student: John Doe • Challenge: Two Sum</small>
-                                        </div>
-                                        <span class="badge bg-warning">Очікує</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Binary Search Solution</h6>
-                                            <small class="text-muted">Student: Jane Smith • Challenge: Binary Search</small>
-                                        </div>
-                                        <span class="badge bg-warning">Очікує</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Sorting Algorithm</h6>
-                                            <small class="text-muted">Student: Mike Johnson • Challenge: Quick Sort</small>
-                                        </div>
-                                        <span class="badge bg-warning">Очікує</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- My Challenges Table -->
-            <div class="row g-4">
-                <div class="col-12">
-                    <div class="card card-modern">
-                        <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold mb-0">
-                                <i class="bi bi-list-task me-2"></i>Мої завдання
-                            </h5>
-                            <a asp-controller="Challenges" asp-action="Create" class="btn btn-sm btn-outline-success">
-                                <i class="bi bi-plus-circle me-1"></i>Створити
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Назва</th>
-                                            <th>Складність</th>
-                                            <th>Рішень</th>
-                                            <th>Успішність</th>
-                                            <th>Статус</th>
-                                            <th>Дії</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Two Sum</strong></td>
-                                            <td><span class="badge bg-success">Easy</span></td>
-                                            <td>45</td>
-                                            <td>
-                                                <div class="progress progress-modern" style="height: 6px; min-width: 100px;">
-                                                    <div class="progress-bar bg-success" style="width: 85%"></div>
-                                                </div>
-                                                <small>85%</small>
-                                            </td>
-                                            <td><span class="badge bg-success">Активне</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-warning">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Binary Search</strong></td>
-                                            <td><span class="badge bg-warning">Medium</span></td>
-                                            <td>32</td>
-                                            <td>
-                                                <div class="progress progress-modern" style="height: 6px; min-width: 100px;">
-                                                    <div class="progress-bar bg-warning" style="width: 65%"></div>
-                                                </div>
-                                                <small>65%</small>
-                                            </td>
-                                            <td><span class="badge bg-success">Активне</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-warning">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Graph Traversal</strong></td>
-                                            <td><span class="badge bg-danger">Hard</span></td>
-                                            <td>12</td>
-                                            <td>
-                                                <div class="progress progress-modern" style="height: 6px; min-width: 100px;">
-                                                    <div class="progress-bar bg-danger" style="width: 45%"></div>
-                                                </div>
-                                                <small>45%</small>
-                                            </td>
-                                            <td><span class="badge bg-secondary">Чернетка</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-warning">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <h6 class="fw-bold mb-3">
+                        <i class="bi bi-lightbulb me-2"></i>Корисні поради
+                    </h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <small>Створюйте зрозумілі інструкції до завдань</small>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <small>Додавайте приклади вхідних/вихідних даних</small>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <small>Тестуйте завдання перед публікацією</small>
+                        </li>
+                        <li class="mb-0">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <small>Переглядайте рішення студентів регулярно</small>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

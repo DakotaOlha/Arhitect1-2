@@ -1,0 +1,169 @@
+﻿@model Laba1_2.Models.Challenge
+@{
+    ViewData["Title"] = "Редагування завдання";
+    var languages = ViewBag.Languages as List<Laba1_2.Models.Language>;
+}
+
+<link rel="stylesheet" href="~/css/mentor.css?v=@DateTime.Now.Ticks" />
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold mb-0">
+                            <i class="bi bi-pencil me-2"></i>Редагування завдання
+                        </h4>
+                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i>Назад
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedByUserId" />
+                        <input type="hidden" asp-for="CreatedAt" />
+                        
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h6 class="card-section-header">
+                                <i class="bi bi-info-circle me-2"></i>Основна інформація
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label class="form-label">
+                                        Назва завдання <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="Title" required>
+                                    <small class="text-muted">Коротка та зрозуміла назва завдання</small>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">
+                                        Складність <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" asp-for="DifficultyLevel" required>
+                                        <option value="">Оберіть складність</option>
+                                        <option value="1">1 - Дуже легкий</option>
+                                        <option value="2">2 - Легкий</option>
+                                        <option value="3">3 - Легкий+</option>
+                                        <option value="4">4 - Середній-</option>
+                                        <option value="5">5 - Середній</option>
+                                        <option value="6">6 - Середній+</option>
+                                        <option value="7">7 - Складний-</option>
+                                        <option value="8">8 - Складний</option>
+                                        <option value="9">9 - Складний+</option>
+                                        <option value="10">10 - Експертний</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        Опис завдання <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" asp-for="Description" rows="4" required></textarea>
+                                    <small class="text-muted">Опишіть суть завдання та що потрібно зробити</small>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        Інструкції <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" asp-for="Instructions" rows="6" required></textarea>
+                                    <small class="text-muted">Покрокові інструкції для виконання завдання</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        Бали за виконання <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" asp-for="Points" min="1" max="100" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Статус</label>
+                                    <div class="form-check form-switch mt-2">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActive">
+                                        <label class="form-check-label" for="isActive">
+                                            <strong>Активне завдання</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Programming Languages -->
+                        <div class="form-section">
+                            <h6 class="card-section-header">
+                                <i class="bi bi-code-slash me-2"></i>Мови програмування
+                            </h6>
+                            <p class="text-muted mb-3">Оберіть мови, які підтримує це завдання</p>
+                            <div class="row g-3">
+                                @foreach (var lang in languages)
+                                {
+                                    var isChecked = Model.ChallengeLanguages.Any(cl => cl.LanguageId == lang.Id);
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="selectedLanguages" value="@lang.Id" 
+                                                   id="lang_@lang.Id" @(isChecked ? "checked" : "")>
+                                            <label class="form-check-label" for="lang_@lang.Id">
+                                                <strong>@lang.Name</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Example Input/Output -->
+                        <div class="form-section">
+                            <h6 class="card-section-header">
+                                <i class="bi bi-arrow-left-right me-2"></i>Приклади вхідних/вихідних даних
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Приклад вхідних даних</label>
+                                    <textarea class="form-control" asp-for="ExampleInput" rows="4"></textarea>
+                                    <small class="text-muted">Приклад того, що передається на вхід функції</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Очікуваний результат</label>
+                                    <textarea class="form-control" asp-for="ExampleOutput" rows="4"></textarea>
+                                    <small class="text-muted">Очікуваний результат для прикладу</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Test Cases (Read-only display) -->
+                        <div class="form-section">
+                            <h6 class="card-section-header">
+                                <i class="bi bi-check2-square me-2"></i>Тест-кейси
+                            </h6>
+                            <input type="hidden" asp-for="TestCases" />
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Тест-кейси зберігаються в форматі JSON. Для зміни тест-кейсів потрібно створити нове завдання.
+                            </div>
+                            <div class="bg-light p-3 rounded">
+                                <small class="text-muted">Поточні тест-кейси:</small>
+                                <pre class="mb-0 mt-2"><code>@Model.TestCases</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-3 flex-wrap">
+                            <button type="submit" class="btn btn-primary btn-modern">
+                                <i class="bi bi-check-circle me-2"></i>Зберегти зміни
+                            </button>
+                            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-2"></i>Скасувати
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

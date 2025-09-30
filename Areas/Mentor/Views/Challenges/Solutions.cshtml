@@ -1,0 +1,246 @@
+﻿@model List<Laba1_2.Models.Solution>
+@{
+    ViewData["Title"] = "Рішення студентів";
+    var challenge = ViewBag.Challenge as Laba1_2.Models.Challenge;
+}
+
+<link rel="stylesheet" href="~/css/mentor.css?v=@DateTime.Now.Ticks" />
+@* Додаємо __RequestVerificationToken для форм *@
+<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item"><a asp-action="Index">Мої завдання</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Details" asp-route-id="@challenge.Id">@challenge.Title</a></li>
+                    <li class="breadcrumb-item active">Рішення</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-code-square me-2"></i>Рішення студентів
+            </h2>
+            <p class="text-muted mb-0">Завдання: @challenge.Title</p>
+        </div>
+        <a asp-action="Details" asp-route-id="@challenge.Id" class="btn btn-outline-secondary btn-modern">
+            <i class="bi bi-arrow-left me-2"></i>Назад до завдання
+        </a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row g-4 mb-4">
+            @{
+                var totalSolutions = Model.Count;
+                var successfulSolutions = Model.Count(s => s.IsSuccessful);
+                var uniqueStudents = Model.Select(s => s.UserId).Distinct().Count();
+                var avgExecutionTime = Model.Any() ? Model.Average(s => s.ExecutionTimeMs) : 0;
+                var successRate = totalSolutions > 0 ? (successfulSolutions * 100.0 / totalSolutions) : 0;
+            }
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card border-start border-5 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-circle bg-primary-light me-3">
+                                <i class="bi bi-file-code-fill text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">@totalSolutions</h4>
+                                <small class="text-muted">Всього рішень</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card border-start border-5 border-success">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-circle bg-success-light me-3">
+                                <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">@successfulSolutions</h4>
+                                <small class="text-muted">Успішних рішень</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card border-start border-5 border-info">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-circle bg-info-light me-3">
+                                <i class="bi bi-people-fill text-info fs-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">@uniqueStudents</h4>
+                                <small class="text-muted">Студентів</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stats-card border-start border-5 border-warning">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-circle bg-warning-light me-3">
+                                <i class="bi bi-graph-up text-warning fs-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-0">@successRate.ToString("F0")%</h4>
+                                <small class="text-muted">Успішність</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-modern">
+            <div class="card-header bg-transparent border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Список рішень</h5>
+                    <div class="d-flex gap-2">
+                        <select class="form-select form-select-sm" id="filterStatus" style="width: 150px;">
+                            <option value="">Всі рішення</option>
+                            <option value="success">Успішні</option>
+                            <option value="failed">Невдалі</option>
+                        </select>
+                        <select class="form-select form-select-sm" id="filterLanguage" style="width: 150px;">
+                            <option value="">Всі мови</option>
+                            @foreach (var lang in Model.Select(s => s.Language).Distinct())
+                            {
+                                <option value="@lang.Id">@lang.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Студент</th>
+                                <th>Мова</th>
+                                <th>Статус</th>
+                                <th>Час виконання</th>
+                                <th>Бали</th>
+                                <th>Дата відправки</th>
+                                <th class="pe-4">Дії</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var solution in Model)
+                            {
+                                <tr class="solution-row" 
+                                    data-status="@(solution.IsSuccessful ? "success" : "failed")"
+                                    data-language="@solution.LanguageId">
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="gradient-primary rounded-circle p-2 me-3" style="width: 40px; height: 40px;">
+                                                <i class="bi bi-person text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0">@solution.User.FirstName @solution.User.LastName</h6>
+                                                <small class="text-muted">@solution.User.Email</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            <i class="bi bi-code me-1"></i>@solution.Language.Name
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (solution.IsSuccessful)
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check-circle me-1"></i>Успішно
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                <i class="bi bi-x-circle me-1"></i>Невдало
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">@solution.ExecutionTimeMs ms</small>
+                                    </td>
+                                    <td>
+                                        <strong class="text-@(solution.IsSuccessful ? "success" : "danger")">
+                                            @solution.PointsEarned / @challenge.Points
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            @solution.SubmittedAt.ToString("dd.MM.yyyy HH:mm")
+                                        </small>
+                                    </td>
+                                    <td class="pe-4">
+                                        <a asp-action="SolutionDetails" asp-route-id="@solution.Id" 
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye me-1"></i>Переглянути
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card card-modern">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #d1d5db;"></i>
+                <h4 class="mt-3 fw-bold">Ще немає рішень</h4>
+                <p class="text-muted mb-0">Студенти ще не відправляли рішення для цього завдання</p>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterStatus = document.getElementById('filterStatus');
+            const filterLanguage = document.getElementById('filterLanguage');
+            const rows = document.querySelectorAll('.solution-row');
+
+            function applyFilters() {
+                const statusValue = filterStatus.value;
+                const languageValue = filterLanguage.value;
+
+                rows.forEach(row => {
+                    const rowStatus = row.getAttribute('data-status');
+                    const rowLanguage = row.getAttribute('data-language');
+
+                    const matchesStatus = !statusValue || rowStatus === statusValue;
+                    const matchesLanguage = !languageValue || rowLanguage === languageValue;
+
+                    if (matchesStatus && matchesLanguage) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            if (filterStatus) filterStatus.addEventListener('change', applyFilters);
+            if (filterLanguage) filterLanguage.addEventListener('change', applyFilters);
+        });
+    </script>
+}

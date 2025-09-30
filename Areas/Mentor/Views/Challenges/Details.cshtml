@@ -1,0 +1,363 @@
+﻿@model Laba1_2.Models.Challenge
+@{
+    ViewData["Title"] = Model.Title;
+    var totalSubmissions = ViewBag.TotalSubmissions as int? ?? 0;
+    var successfulSubmissions = ViewBag.SuccessfulSubmissions as int? ?? 0;
+    var uniqueUsers = ViewBag.UniqueUsers as int? ?? 0;
+    var averageScore = ViewBag.AverageScore as double? ?? 0;
+    var successRate = totalSubmissions > 0 ? (successfulSubmissions * 100.0 / totalSubmissions) : 0;
+}
+
+<link rel="stylesheet" href="~/css/mentor.css?v=@DateTime.Now.Ticks" />
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item"><a asp-action="Index">Мої завдання</a></li>
+                    <li class="breadcrumb-item active">@Model.Title</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-1">@Model.Title</h2>
+            <div class="d-flex gap-2 align-items-center">
+                <span class="badge bg-@(Model.DifficultyLevel <= 3 ? "success" : Model.DifficultyLevel <= 6 ? "warning" : "danger")">
+                    @(Model.DifficultyLevel <= 3 ? "Легкий" : Model.DifficultyLevel <= 6 ? "Середній" : "Складний")
+                </span>
+                <span class="badge bg-@(Model.IsActive ? "success" : "secondary")">
+                    @(Model.IsActive ? "Активне" : "Неактивне")
+                </span>
+                <small class="text-muted">
+                    <i class="bi bi-trophy me-1"></i>@Model.Points балів
+                </small>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Solutions" asp-route-id="@Model.Id" class="btn btn-primary btn-modern">
+                <i class="bi bi-code-square me-2"></i>Рішення (@totalSubmissions)
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-modern">
+                <i class="bi bi-pencil me-2"></i>Редагувати
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-modern">
+                <i class="bi bi-arrow-left me-2"></i>Назад
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="stats-card border-start border-5 border-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-circle bg-primary-light me-3">
+                            <i class="bi bi-file-code-fill text-primary fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">@totalSubmissions</h4>
+                            <small class="text-muted">Всього рішень</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="stats-card border-start border-5 border-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-circle bg-success-light me-3">
+                            <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">@successRate.ToString("F0")%</h4>
+                            <small class="text-muted">Успішність</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="stats-card border-start border-5 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-circle bg-info-light me-3">
+                            <i class="bi bi-people-fill text-info fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">@uniqueUsers</h4>
+                            <small class="text-muted">Студентів</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="stats-card border-start border-5 border-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="icon-circle bg-warning-light me-3">
+                            <i class="bi bi-star-fill text-warning fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">@averageScore.ToString("F1")</h4>
+                            <small class="text-muted">Середній бал</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <!-- Challenge Description -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-file-text me-2"></i>Опис завдання
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">@Model.Description</p>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-list-ol me-2"></i>Інструкції
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <pre class="mb-0" style="white-space: pre-wrap; font-family: inherit;">@Model.Instructions</pre>
+                </div>
+            </div>
+
+            <!-- Examples -->
+            @if (!string.IsNullOrEmpty(Model.ExampleInput) || !string.IsNullOrEmpty(Model.ExampleOutput))
+            {
+                <div class="card card-modern mb-4">
+                    <div class="card-header bg-transparent border-bottom">
+                        <h5 class="fw-bold mb-0">
+                            <i class="bi bi-lightbulb me-2"></i>Приклади
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(Model.ExampleInput))
+                        {
+                            <div class="mb-3">
+                                <h6 class="fw-bold">Приклад вхідних даних:</h6>
+                                <pre class="bg-light p-3 rounded">@Model.ExampleInput</pre>
+                            </div>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.ExampleOutput))
+                        {
+                            <div>
+                                <h6 class="fw-bold">Очікуваний результат:</h6>
+                                <pre class="bg-light p-3 rounded">@Model.ExampleOutput</pre>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Recent Solutions -->
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-clock-history me-2"></i>Останні рішення
+                    </h5>
+                    <a asp-action="Solutions" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary">
+                        Всі рішення <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model.Solutions.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var solution in Model.Solutions.OrderByDescending(s => s.SubmittedAt).Take(5))
+                            {
+                                <div class="list-group-item px-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center flex-grow-1">
+                                            <div class="gradient-primary rounded-circle p-2 me-3" style="width: 40px; height: 40px;">
+                                                <i class="bi bi-person text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0">@solution.User.FirstName @solution.User.LastName</h6>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-code me-1"></i>@solution.Language.Name
+                                                    • @solution.SubmittedAt.ToString("dd.MM.yyyy HH:mm")
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            @if (solution.IsSuccessful)
+                                            {
+                                                <span class="badge bg-success">Успішно</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Невдало</span>
+                                            }
+                                            <a asp-action="SolutionDetails" asp-route-id="@solution.Id" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center mb-0 py-3">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                            Ще немає рішень для цього завдання
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Challenge Info -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Інформація
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Складність</small>
+                        <span class="badge bg-@(Model.DifficultyLevel <= 3 ? "success" : Model.DifficultyLevel <= 6 ? "warning" : "danger")">
+                            Рівень @Model.DifficultyLevel / 10
+                        </span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Бали за виконання</small>
+                        <strong>@Model.Points балів</strong>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Статус</small>
+                        <span class="badge bg-@(Model.IsActive ? "success" : "secondary")">
+                            @(Model.IsActive ? "Активне" : "Неактивне")
+                        </span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">Створено</small>
+                        <strong>@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</strong>
+                    </div>
+                    
+                    @if (Model.UpdatedAt.HasValue)
+                    {
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-1">Оновлено</small>
+                            <strong>@Model.UpdatedAt.Value.ToString("dd.MM.yyyy HH:mm")</strong>
+                        </div>
+                    }
+                    
+                    <div>
+                        <small class="text-muted d-block mb-1">Автор</small>
+                        <strong>@Model.CreatedByUser.FirstName @Model.CreatedByUser.LastName</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Languages -->
+            <div class="card card-modern mb-4">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-code-slash me-2"></i>Підтримувані мови
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var cl in Model.ChallengeLanguages)
+                        {
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-code me-1"></i>@cl.Language.Name
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-gear me-2"></i>Дії
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-action="Solutions" asp-route-id="@Model.Id" class="btn btn-primary btn-modern">
+                            <i class="bi bi-code-square me-2"></i>Переглянути рішення
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-modern">
+                            <i class="bi bi-pencil me-2"></i>Редагувати завдання
+                        </a>
+                        <button class="btn btn-outline-danger btn-modern" onclick="toggleStatus(@Model.Id, @Model.IsActive.ToString().ToLower())">
+                            <i class="bi bi-@(Model.IsActive ? "pause" : "play")-circle me-2"></i>
+                            @(Model.IsActive ? "Деактивувати" : "Активувати")
+                        </button>
+                        <hr class="my-2">
+                        <button class="btn btn-danger btn-modern" onclick="deleteChallenge(@Model.Id, '@Model.Title')">
+                            <i class="bi bi-trash me-2"></i>Видалити завдання
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleStatus(id, isActive) {
+            const action = isActive ? 'деактивувати' : 'активувати';
+            if (confirm(`Ви впевнені, що хочете ${action} це завдання?`)) {
+                // В реальному додатку тут буде AJAX запит
+                window.location.href = `/Mentor/Challenges/ToggleStatus/${id}`;
+            }
+        }
+
+        function deleteChallenge(id, title) {
+            if (confirm(`Ви впевнені, що хочете видалити завдання "${title}"?\n\nЦе також видалить всі пов'язані рішення студентів.\n\nЦю дію не можна скасувати!`)) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("Delete")';
+                
+                const token = document.querySelector('input[name="__RequestVerificationToken"]');
+                if (token) {
+                    const tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = '__RequestVerificationToken';
+                    tokenInput.value = token.value;
+                    form.appendChild(tokenInput);
+                }
+                
+                const idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = id;
+                form.appendChild(idInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+}
