@@ -18,121 +18,88 @@
                         <p class="text-muted">Приєднуйтесь до нашої спільноти розробників</p>
                     </div>
 
-                    <form>
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Ім'я *</label>
+                                <label asp-for="FirstName" class="form-label">Ім'я *</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-dark border-end-0">
                                         <i class="bi bi-person text-muted"></i>
                                     </span>
-                                    <input type="text" class="form-control border-start-0" placeholder="Ваше ім'я" required>
+                                    <input asp-for="FirstName" class="form-control border-start-0" placeholder="Ваше ім'я" />
                                 </div>
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">Прізвище *</label>
+                                <label asp-for="LastName" class="form-label">Прізвище *</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-dark border-end-0">
                                         <i class="bi bi-person text-muted"></i>
                                     </span>
-                                    <input type="text" class="form-control border-start-0" placeholder="Ваше прізвище" required>
+                                    <input asp-for="LastName" class="form-control border-start-0" placeholder="Ваше прізвище" />
                                 </div>
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
                             </div>
+
                             <div class="col-12">
-                                <label class="form-label">Електронна пошта *</label>
+                                <label asp-for="Email" class="form-label">Електронна пошта *</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-dark border-end-0">
                                         <i class="bi bi-envelope text-muted"></i>
                                     </span>
-                                    <input type="email" class="form-control border-start-0" placeholder="your@email.com" required>
+                                    <input asp-for="Email" class="form-control border-start-0" placeholder="your@email.com" />
                                 </div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label">Пароль *</label>
+                                <label asp-for="Password" class="form-label">Пароль *</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-dark border-end-0">
                                         <i class="bi bi-lock text-muted"></i>
                                     </span>
-                                    <input type="password" class="form-control border-start-0" placeholder="Створіть надійний пароль" required>
-                                    <button class="btn btn-outline-secondary border-start-0" type="button">
+                                    <input asp-for="Password" class="form-control border-start-0" placeholder="Створіть надійний пароль" />
+                                    <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
                                 <div class="form-text">
-                                    Пароль має містити принаймні 8 символів, включаючи цифри та літери
+                                    Пароль має містити принаймні 6 символів, включаючи цифри, великі та малі літери
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label">Підтвердження пароля *</label>
+                                <label asp-for="ConfirmPassword" class="form-label">Підтвердження пароля *</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-dark border-end-0">
                                         <i class="bi bi-lock-fill text-muted"></i>
                                     </span>
-                                    <input type="password" class="form-control border-start-0" placeholder="Повторіть ваш пароль" required>
-                                    <button class="btn btn-outline-secondary border-start-0" type="button">
+                                    <input asp-for="ConfirmPassword" class="form-control border-start-0" placeholder="Повторіть ваш пароль" />
+                                    <button class="btn btn-outline-secondary border-start-0" type="button" id="toggleConfirmPassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">Тип акаунту *</label>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-check-card">
-                                            <input class="form-check-input" type="radio" name="userType" id="student" checked>
-                                            <label class="form-check-label w-100" for="student">
-                                                <div class="card card-modern text-center p-3">
-                                                    <div class="card-body">
-                                                        <i class="bi bi-person fs-2 text-primary mb-2"></i>
-                                                        <h6 class="fw-bold">Студент</h6>
-                                                        <small class="text-muted">Навчайтесь та практикуйте навички</small>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check-card">
-                                            <input class="form-check-input" type="radio" name="userType" id="mentor">
-                                            <label class="form-check-label w-100" for="mentor">
-                                                <div class="card card-modern text-center p-3">
-                                                    <div class="card-body">
-                                                        <i class="bi bi-person-gear fs-2 text-warning mb-2"></i>
-                                                        <h6 class="fw-bold">Ментор</h6>
-                                                        <small class="text-muted">Створюйте завдання та допомагайте іншим</small>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Про себе (необов'язково)</label>
-                                <textarea class="form-control" rows="3" placeholder="Розкажіть трохи про себе, ваш досвід та інтереси..."></textarea>
+                                <textarea asp-for="Bio" class="form-control" rows="3" placeholder="Розкажіть трохи про себе, ваш досвід та інтереси..."></textarea>
+                                <span asp-validation-for="Bio" class="text-danger small"></span>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms" required>
-                                    <label class="form-check-label" for="terms">
+                                    <input asp-for="AcceptTerms" class="form-check-input" />
+                                    <label asp-for="AcceptTerms" class="form-check-label">
                                         Я погоджуюсь з <a href="#" class="text-primary">Умовами використання</a> та <a href="#" class="text-primary">Політикою конфіденційності</a>
                                     </label>
                                 </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
-                                    <label class="form-check-label" for="newsletter">
-                                        Я хочу отримувати інформацію про нові завдання та оновлення платформи
-                                    </label>
-                                </div>
+                                <span asp-validation-for="AcceptTerms" class="text-danger small"></span>
                             </div>
                         </div>
 
@@ -153,25 +120,26 @@
     </div>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.querySelector('input[name="Password"]');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const passwordInput = document.querySelector('input[name="ConfirmPassword"]');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+    </script>
+}
+
 <style>
-    .form-check-card .form-check-input {
-        display: none;
-    }
-
-        .form-check-card .form-check-input:checked + .form-check-label .card {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-    .form-check-card .card {
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-        .form-check-card .card:hover {
-            border-color: #667eea;
-        }
-
     .input-group-text {
         background-color: #2d3748;
         border: 1px solid #4a5568;

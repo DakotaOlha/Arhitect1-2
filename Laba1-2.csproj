@@ -27,7 +27,6 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Admin\Views\" />
-		<Folder Include="Areas\Mentor\Views\" />
 		<Folder Include="Areas\Student\Views\" />
 		<Folder Include="wwwroot\lib\" />
 	</ItemGroup>

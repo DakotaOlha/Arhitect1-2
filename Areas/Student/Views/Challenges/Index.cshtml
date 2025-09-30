@@ -54,36 +54,6 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Мови програмування</label>
-                            <div class="filter-options">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="langPython" checked>
-                                    <label class="form-check-label" for="langPython">
-                                        <i class="bi bi-filetype-py text-success me-1"></i>Python
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="langJavaScript" checked>
-                                    <label class="form-check-label" for="langJavaScript">
-                                        <i class="bi bi-filetype-js text-warning me-1"></i>JavaScript
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="langCSharp" checked>
-                                    <label class="form-check-label" for="langCSharp">
-                                        <i class="bi bi-code text-primary me-1"></i>C#
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="langJava" checked>
-                                    <label class="form-check-label" for="langJava">
-                                        <i class="bi bi-filetype-java text-danger me-1"></i>Java
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <button class="btn btn-primary w-100" id="applyFilters">
                             <i class="bi bi-check-circle me-2"></i>Застосувати
                         </button>
@@ -101,37 +71,10 @@
                         <div class="progress-item mb-3">
                             <div class="d-flex justify-content-between mb-1">
                                 <small>Загалом</small>
-                                <small class="fw-bold">12/95</small>
+                                <small class="fw-bold">0/@Model.Count</small>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-primary" style="width: 12%"></div>
-                            </div>
-                        </div>
-                        <div class="progress-item mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Легкі</small>
-                                <small class="fw-bold">8/45</small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" style="width: 18%"></div>
-                            </div>
-                        </div>
-                        <div class="progress-item mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Середні</small>
-                                <small class="fw-bold">4/32</small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-warning" style="width: 12%"></div>
-                            </div>
-                        </div>
-                        <div class="progress-item">
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Складні</small>
-                                <small class="fw-bold">0/18</small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" style="width: 0%"></div>
+                                <div class="progress-bar bg-primary" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
@@ -201,7 +144,7 @@
                                         <i class="bi bi-trophy text-warning me-1"></i>
                                         <small class="fw-bold">@challenge.Points балів</small>
                                     </div>
-                                    <a asp-action="Details" asp-route-id="@challenge.Id" class="btn btn-primary btn-sm">
+                                    <a asp-area="Student" asp-controller="Challenges" asp-action="Details" asp-route-id="@challenge.Id" class="btn btn-primary btn-sm">
                                         <i class="bi bi-play-circle me-1"></i>Розв'язати
                                     </a>
                                 </div>

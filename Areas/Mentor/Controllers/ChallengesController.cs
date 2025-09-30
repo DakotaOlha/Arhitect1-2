@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Laba1_2.Areas.Mentor.Controllers
 {
@@ -13,22 +14,43 @@ namespace Laba1_2.Areas.Mentor.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<ChallengesController> _logger;
 
-        public ChallengesController(ApplicationDbContext context, UserManager<User> userManager)
+        public ChallengesController(
+            ApplicationDbContext context,
+            UserManager<User> userManager,
+            ILogger<ChallengesController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(User);
-            var challenges = await _context.Challenges
-                .Where(c => c.CreatedByUserId == user!.Id)
-                .OrderByDescending(c => c.CreatedAt)
-                .ToListAsync();
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return RedirectToAction("Login", "Account", new { area = "" });
+                }
 
-            return View(challenges);
+                var challenges = await _context.Challenges
+                    .Where(c => c.CreatedByUserId == user.Id)
+                    .Include(c => c.ChallengeLanguages)
+                        .ThenInclude(cl => cl.Language)
+                    .OrderByDescending(c => c.CreatedAt)
+                    .ToListAsync();
+
+                return View(challenges);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading challenges");
+                TempData["ErrorMessage"] = "Помилка завантаження завдань";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public async Task<IActionResult> Create()
@@ -41,36 +63,118 @@ namespace Laba1_2.Areas.Mentor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Challenge challenge, int[] selectedLanguages, Dictionary<int, string> starterCode)
+        public async Task<IActionResult> Create(
+            string Title,
+            int DifficultyLevel,
+            string Description,
+            string Instructions,
+            int Points,
+            string? ExampleInput,
+            string? ExampleOutput,
+            int[] selectedLanguages,
+            string? StarterCode,
+            string[]? TestCaseInput,
+            string[]? TestCaseOutput,
+            bool IsActive = true)
         {
-            if (ModelState.IsValid)
+            try
             {
                 var user = await _userManager.GetUserAsync(User);
-                challenge.CreatedByUserId = user!.Id;
-                challenge.CreatedAt = DateTime.UtcNow;
+                if (user == null)
+                {
+                    return Unauthorized();
+                }
+
+                // Створюємо тест-кейси у форматі JSON
+                var testCases = new List<object>();
+                if (TestCaseInput != null && TestCaseOutput != null)
+                {
+                    for (int i = 0; i < TestCaseInput.Length; i++)
+                    {
+                        if (i < TestCaseOutput.Length)
+                        {
+                            testCases.Add(new
+                            {
+                                Input = TestCaseInput[i],
+                                ExpectedOutput = TestCaseOutput[i]
+                            });
+                        }
+                    }
+                }
+
+                var challenge = new Challenge
+                {
+                    Title = Title,
+                    Description = Description,
+                    Instructions = Instructions,
+                    ExampleInput = ExampleInput,
+                    ExampleOutput = ExampleOutput,
+                    TestCases = JsonSerializer.Serialize(testCases),
+                    DifficultyLevel = DifficultyLevel,
+                    Points = Points,
+                    IsActive = IsActive,
+                    CreatedByUserId = user.Id,
+                    CreatedAt = DateTime.UtcNow
+                };
 
                 _context.Challenges.Add(challenge);
                 await _context.SaveChangesAsync();
 
-                foreach (var langId in selectedLanguages)
+                // Додаємо мови програмування
+                if (selectedLanguages != null && selectedLanguages.Length > 0)
                 {
-                    var challengeLanguage = new ChallengeLanguage
+                    foreach (var langId in selectedLanguages)
                     {
-                        ChallengeId = challenge.Id,
-                        LanguageId = langId,
-                        StarterCode = starterCode.ContainsKey(langId) ? starterCode[langId] : null
-                    };
-                    _context.ChallengeLanguages.Add(challengeLanguage);
+                        var challengeLanguage = new ChallengeLanguage
+                        {
+                            ChallengeId = challenge.Id,
+                            LanguageId = langId,
+                            StarterCode = StarterCode
+                        };
+                        _context.ChallengeLanguages.Add(challengeLanguage);
+                    }
+                    await _context.SaveChangesAsync();
                 }
 
-                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Завдання '{Title}' успішно створено!";
                 return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating challenge");
+                TempData["ErrorMessage"] = "Помилка створення завдання: " + ex.Message;
 
-            ViewBag.Languages = await _context.Languages
-                .Where(l => l.IsActive)
-                .ToListAsync();
-            return View(challenge);
+                ViewBag.Languages = await _context.Languages
+                    .Where(l => l.IsActive)
+                    .ToListAsync();
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var challenge = await _context.Challenges
+                    .Include(c => c.ChallengeLanguages)
+                        .ThenInclude(cl => cl.Language)
+                    .FirstOrDefaultAsync(c => c.Id == id && c.CreatedByUserId == user!.Id);
+
+                if (challenge == null)
+                {
+                    TempData["ErrorMessage"] = "Завдання не знайдено";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(challenge);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading challenge details");
+                TempData["ErrorMessage"] = "Помилка завантаження завдання";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -108,7 +212,7 @@ namespace Laba1_2.Areas.Mentor.Controllers
             if (existingChallenge == null)
                 return NotFound();
 
-            if (ModelState.IsValid)
+            try
             {
                 existingChallenge.Title = challenge.Title;
                 existingChallenge.Description = challenge.Description;
@@ -122,10 +226,43 @@ namespace Laba1_2.Areas.Mentor.Controllers
                 existingChallenge.UpdatedAt = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Завдання успішно оновлено!";
                 return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating challenge");
+                TempData["ErrorMessage"] = "Помилка оновлення завдання";
+                return View(challenge);
+            }
+        }
 
-            return View(challenge);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var challenge = await _context.Challenges
+                    .FirstOrDefaultAsync(c => c.Id == id && c.CreatedByUserId == user!.Id);
+
+                if (challenge == null)
+                {
+                    return Json(new { success = false, message = "Завдання не знайдено" });
+                }
+
+                _context.Challenges.Remove(challenge);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Завдання видалено" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting challenge");
+                return Json(new { success = false, message = "Помилка видалення" });
+            }
         }
     }
 }

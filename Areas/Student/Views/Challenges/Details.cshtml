@@ -1,0 +1,254 @@
+﻿@model Laba1_2.Models.Challenge
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .code-editor {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+        
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 16px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content-between;
+            align-items: center;
+        }
+        
+        .code-header span {
+            color: #e5e7eb !important;
+            font-weight: 600;
+        }
+        
+        .code-editor textarea {
+            background: #1e1e1e !important;
+            color: #e5e7eb !important;
+            border: none;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 1rem;
+            resize: none;
+        }
+        
+        .code-editor textarea:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+}
+
+<link rel="stylesheet" href="~/css/challenges.css?v=@DateTime.Now.Ticks" />
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold mb-0">@Model.Title</h4>
+                        <span class="badge bg-@(Model.DifficultyLevel <= 3 ? "success" : Model.DifficultyLevel <= 6 ? "warning" : "danger")">
+                            @(Model.DifficultyLevel <= 3 ? "Легкий" : Model.DifficultyLevel <= 6 ? "Середній" : "Складний")
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Опис завдання</h6>
+                        <p class="text-muted">@Model.Description</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Інструкції</h6>
+                        <div class="text-muted" style="white-space: pre-line;">@Model.Instructions</div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ExampleInput))
+                    {
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Приклад вхідних даних</h6>
+                            <pre class="bg-light p-3 rounded">@Model.ExampleInput</pre>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.ExampleOutput))
+                    {
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Очікуваний результат</h6>
+                            <pre class="bg-light p-3 rounded">@Model.ExampleOutput</pre>
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <div>
+                            <i class="bi bi-trophy text-warning me-1"></i>
+                            <strong>@Model.Points балів</strong>
+                        </div>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Назад
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-modern">
+                <div class="card-header bg-transparent border-bottom">
+                    <h5 class="fw-bold mb-0">Напишіть ваше рішення</h5>
+                </div>
+                <div class="card-body">
+                    <form id="solutionForm">
+                        <input type="hidden" name="challengeId" value="@Model.Id" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Оберіть мову програмування</label>
+                            <select class="form-select" id="languageSelect" name="languageId">
+                                @foreach (var cl in Model.ChallengeLanguages)
+                                {
+                                    <option value="@cl.LanguageId" data-starter="@cl.StarterCode">
+                                        @cl.Language.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ваш код</label>
+                            <div class="code-editor">
+                                <div class="code-header">
+                                    <span>solution.py</span>
+                                </div>
+                                <textarea class="form-control" id="codeEditor" name="code" rows="15" style="font-family: monospace; background: #1e1e1e; color: #e5e7eb;">@(Model.ChallengeLanguages.FirstOrDefault()?.StarterCode ?? "# Write your code here")</textarea>
+                            </div>
+                        </div>
+
+                        <div id="resultContainer" class="mb-3" style="display: none;">
+                            <div id="resultContent"></div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="button" id="runButton" class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-play-circle me-2"></i>Запустити код
+                            </button>
+                            <button type="submit" id="submitButton" class="btn btn-success flex-grow-1">
+                                <i class="bi bi-check-circle me-2"></i>Надіслати рішення
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('languageSelect');
+            const codeEditor = document.getElementById('codeEditor');
+            const solutionForm = document.getElementById('solutionForm');
+            const runButton = document.getElementById('runButton');
+            const submitButton = document.getElementById('submitButton');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultContent = document.getElementById('resultContent');
+
+            // Change starter code when language changes
+            languageSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const starterCode = selectedOption.getAttribute('data-starter');
+                if (starterCode && starterCode !== 'null') {
+                    codeEditor.value = starterCode;
+                }
+            });
+
+            // Run code (test without submitting)
+            runButton.addEventListener('click', async function() {
+                await submitSolution(false);
+            });
+
+            // Submit solution
+            solutionForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await submitSolution(true);
+            });
+
+            async function submitSolution(isFinalSubmit) {
+                const formData = new FormData(solutionForm);
+                const data = {
+                    challengeId: parseInt(formData.get('challengeId')),
+                    languageId: parseInt(formData.get('languageId')),
+                    code: formData.get('code')
+                };
+
+                // Disable buttons
+                runButton.disabled = true;
+                submitButton.disabled = true;
+                runButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Виконується...';
+
+                try {
+                    const response = await fetch('/Student/Challenges/SubmitSolution', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+                    
+                    // Show result
+                    resultContainer.style.display = 'block';
+                    
+                    if (result.success) {
+                        resultContent.innerHTML = `
+                            <div class="alert alert-success">
+                                <h6 class="alert-heading">
+                                    <i class="bi bi-check-circle me-2"></i>Успішно!
+                                </h6>
+                                <p class="mb-0">${result.message}</p>
+                            </div>
+                        `;
+                        
+                        if (isFinalSubmit) {
+                            setTimeout(() => {
+                                window.location.href = '/Student/Home/Index';
+                            }, 2000);
+                        }
+                    } else {
+                        resultContent.innerHTML = `
+                            <div class="alert alert-danger">
+                                <h6 class="alert-heading">
+                                    <i class="bi bi-x-circle me-2"></i>Помилка
+                                </h6>
+                                <p class="mb-0">${result.message || 'Виникла помилка при виконанні коду'}</p>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    resultContent.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h6 class="alert-heading">
+                                <i class="bi bi-x-circle me-2"></i>Помилка
+                            </h6>
+                            <p class="mb-0">Виникла помилка при відправці рішення</p>
+                        </div>
+                    `;
+                    resultContainer.style.display = 'block';
+                }
+
+                // Re-enable buttons
+                runButton.disabled = false;
+                submitButton.disabled = false;
+                runButton.innerHTML = '<i class="bi bi-play-circle me-2"></i>Запустити код';
+            }
+        });
+    </script>
+}
